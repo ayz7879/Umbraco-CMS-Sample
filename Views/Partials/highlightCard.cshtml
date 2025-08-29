@@ -1,0 +1,14 @@
+﻿@using Umbraco.Cms.Core.Models.Blocks
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<BlockListItem>
+
+@{
+    var img = Model.Content.Value<IPublishedContent>("cardImage");
+    var title = Model.Content.Value<string>("cardTitle");
+    var text  = Model.Content.Value<string>("cardText");
+}
+
+<div class="highlight-card">
+    @if (img != null) { <img src="@img.Url()" alt="@title" /> }
+    <h3>@title</h3>
+    @if (!string.IsNullOrWhiteSpace(text)) { <p>@text</p> }
+</div>

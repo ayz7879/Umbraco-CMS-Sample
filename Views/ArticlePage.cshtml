@@ -1,0 +1,360 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@using Umbraco.Cms.Core.Models.Blocks
+@using Umbraco.Cms.Core.Models
+@using Umbraco.Cms.Core.Models.PublishedContent
+@{
+    Layout = "master.cshtml";
+    var articles = Model.Value<IEnumerable<IPublishedContent>>("article");
+    var articlesPerLoad = Model.Value<int>("itemPerPage", fallback: Fallback.ToDefaultValue, defaultValue: 3);
+    var articlesPerRow = Model.Value<int>("articleRowContent", fallback: Fallback.ToDefaultValue, defaultValue: 3);
+    
+    // Check if this is an AJAX request
+    var isAjaxRequest = Context.Request.Headers["X-Requested-With"] == "XMLHttpRequest";
+    var pageStr = Context.Request.Query["page"].ToString();
+    var page = Convert.ToInt32(string.IsNullOrEmpty(pageStr) ? "1" : pageStr);
+    
+    // Get filter parameter
+    var filterTag = Context.Request.Query["filter"].ToString();
+    var isFiltered = !string.IsNullOrEmpty(filterTag) && filterTag != "all";
+    
+    // Apply filter if exists
+    var filteredArticles = articles;
+    if (isFiltered && articles != null)
+    {
+        filteredArticles = articles.Where(article => {
+            var tags = article.Value<IEnumerable<string>>("articleTags");
+            return tags != null && tags.Any(tag => tag.Trim().ToLowerInvariant() == filterTag.ToLowerInvariant());
+        });
+    }
+    
+    // YAHAN CHANGE KIYA: ab hum total articles calculate kar rahe hain starting se current page tak
+    var totalArticlesToShow = page * articlesPerLoad; // Total articles jo dikhane hain
+    var articlesToRender = filteredArticles?.Take(totalArticlesToShow).ToList() ?? new List<IPublishedContent>();
+    var allArticlesCount = filteredArticles?.Count() ?? 0;
+    var hasMoreArticles = allArticlesCount > totalArticlesToShow;
+    
+    // Get all unique tags from articles
+    var allTags = new HashSet<string>();
+    if (articles != null)
+    {
+        foreach (var article in articles)
+        {
+            var tags = article.Value<IEnumerable<string>>("articleTags");
+            if (tags != null)
+            {
+                foreach (var tag in tags)
+                {
+                    allTags.Add(tag.Trim());
+                }
+            }
+        }
+    }
+    
+    // If AJAX request, return JSON response
+    if (isAjaxRequest)
+    {
+        Layout = null;
+        
+        // YAHAN CHANGE: AJAX ke liye complete HTML render kar rahe hain with proper row structure
+        var articlesHtml = RenderArticlesInRows(articlesToRender, articlesPerRow);
+        
+        // Clean HTML for JSON
+        var cleanHtml = articlesHtml.Replace("\"", "\\\"")
+                                   .Replace("\r", "")
+                                   .Replace("\n", "")
+                                   .Replace("\t", "");
+        
+        // Output JSON directly
+        @Html.Raw("{")
+        @Html.Raw("\"html\":\"" + cleanHtml + "\",")
+        @Html.Raw("\"hasMore\":" + (hasMoreArticles ? "true" : "false") + ",")
+        @Html.Raw("\"nextPage\":" + (page + 1))
+        @Html.Raw("}")
+        return;
+    }
+}
+
+<link rel="stylesheet" href="~/css/ArticlesPage.css" />
+
+@Html.Partial("~/Views/Partials/SectionHeader.cshtml")
+
+<div class="articles-container">
+    
+    <!-- Filter Tabs -->
+    @if (allTags.Any())
+    {
+        <div class="article-filters">
+            <button class="filter-tab active" data-filter="all">All</button>
+            @foreach (var tag in allTags.OrderBy(t => t))
+            {
+                <button class="filter-tab" data-filter="@tag.ToLowerInvariant()">@tag</button>
+            }
+        </div>
+    }
+
+    <!-- Articles Wrapper -->
+    <div id="articles-wrapper">
+        @Html.Raw(RenderArticlesInRows(articlesToRender, articlesPerRow))
+    </div>
+    
+    <!-- Load More Button -->
+    <div class="load-more-section">
+        @if (hasMoreArticles)
+        {
+            <button id="load-more-btn" class="load-more" data-page="@(page + 1)" data-loading="false">
+                <span class="load-text">Load More</span>
+                <span class="loading-text" style="display: none;">Loading...</span>
+            </button>
+        }
+    </div>
+</div>
+
+<!-- AJAX Load More Script -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const loadMoreBtn = document.getElementById('load-more-btn');
+    const articlesWrapper = document.getElementById('articles-wrapper');
+    
+    if (loadMoreBtn) {
+        loadMoreBtn.addEventListener('click', function() {
+            const btn = this;
+            const currentPage = parseInt(btn.getAttribute('data-page'));
+            const isLoading = btn.getAttribute('data-loading') === 'true';
+            
+            // Prevent multiple requests
+            if (isLoading) return;
+            
+            // Show loading state
+            btn.setAttribute('data-loading', 'true');
+            btn.querySelector('.load-text').style.display = 'none';
+            btn.querySelector('.loading-text').style.display = 'inline';
+            btn.disabled = true;
+            
+            // Make AJAX request with current filter
+            const activeFilter = document.querySelector('.filter-tab.active');
+            const currentFilter = activeFilter ? activeFilter.getAttribute('data-filter') : 'all';
+            const url = currentFilter === 'all' 
+                ? `${window.location.pathname}?page=${currentPage}`
+                : `${window.location.pathname}?page=${currentPage}&filter=${currentFilter}`;
+            
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                // YAHAN CHANGE: Replace kar rahe hain append ke bajay
+                articlesWrapper.innerHTML = data.html;
+                
+                // Update button state
+                if (data.hasMore) {
+                    btn.setAttribute('data-page', data.nextPage);
+                    btn.setAttribute('data-loading', 'false');
+                    btn.querySelector('.load-text').style.display = 'inline';
+                    btn.querySelector('.loading-text').style.display = 'none';
+                    btn.disabled = false;
+                } else {
+                    // No more articles, hide button
+                    btn.style.display = 'none';
+                }
+            })
+            .catch(error => {
+                console.error('Error loading more articles:', error);
+                
+                // Reset button state on error
+                btn.setAttribute('data-loading', 'false');
+                btn.querySelector('.load-text').style.display = 'inline';
+                btn.querySelector('.loading-text').style.display = 'none';
+                btn.disabled = false;
+                
+                alert('Error loading more articles. Please try again.');
+            });
+        });
+    }
+    
+    // Filter functionality
+    const filterTabs = document.querySelectorAll('.filter-tab');
+    filterTabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            const filter = this.getAttribute('data-filter');
+            
+            // Update active tab
+            filterTabs.forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Reset Load More button for new filter
+            if (loadMoreBtn) {
+                loadMoreBtn.setAttribute('data-page', '2'); // Next page will be 2
+                loadMoreBtn.style.display = 'block'; // Show button again
+                loadMoreBtn.setAttribute('data-loading', 'false');
+                loadMoreBtn.querySelector('.load-text').style.display = 'inline';
+                loadMoreBtn.querySelector('.loading-text').style.display = 'none';
+                loadMoreBtn.disabled = false;
+            }
+            
+            // Clear current articles and reload with filter
+            articlesWrapper.innerHTML = '';
+            loadFilteredArticles(filter, 1);
+        });
+    });
+    
+    // Function to load filtered articles
+    function loadFilteredArticles(filter, page) {
+        const url = filter === 'all' 
+            ? `${window.location.pathname}?page=${page}`
+            : `${window.location.pathname}?page=${page}&filter=${filter}`;
+            
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            articlesWrapper.innerHTML = data.html;
+            
+            // Update Load More button
+            if (loadMoreBtn) {
+                if (data.hasMore) {
+                    loadMoreBtn.setAttribute('data-page', data.nextPage);
+                    loadMoreBtn.style.display = 'block';
+                } else {
+                    loadMoreBtn.style.display = 'none';
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Error loading filtered articles:', error);
+        });
+    }
+});
+</script>
+
+@{
+    // NAYI FUNCTION: Ye function articles ko proper rows mein arrange karti hai
+    string RenderArticlesInRows(List<IPublishedContent> articlesToRender, int articlesPerRow)
+    {
+        if (articlesToRender == null || !articlesToRender.Any())
+            return "";
+            
+        var html = "";
+        var totalArticles = articlesToRender.Count;
+        var currentIndex = 0;
+        
+        while (currentIndex < totalArticles)
+        {
+            // Current row mein kitne articles honge - min of (articlesPerRow, remaining articles)
+            var remainingArticles = Math.Min(articlesPerRow, totalArticles - currentIndex);
+            var rowClass = $"articles-row-{remainingArticles}";
+            
+            html += $"<div class='{rowClass}' data-row='{currentIndex}'>";
+            
+            if (remainingArticles == 1)
+            {
+                html += RenderSingleArticle(articlesToRender[currentIndex]).ToString();
+            }
+            else if (remainingArticles == 2)
+            {
+                html += RenderTwoArticles(articlesToRender, currentIndex).ToString();
+            }
+            else if (remainingArticles >= 3) // 3 ya zyada articles
+            {
+                html += RenderThreeArticles(articlesToRender, currentIndex).ToString();
+            }
+            
+            html += "</div>";
+            currentIndex += remainingArticles;
+        }
+        
+        return html;
+    }
+
+    IHtmlContent RenderSingleArticle(IPublishedContent article)
+    {
+        return RenderArticleCard(article, "article-large");
+    }
+    
+    IHtmlContent RenderTwoArticles(List<IPublishedContent> articles, int startIndex)
+    {
+        var html = "";
+        for (int i = 0; i < 2; i++)
+        {
+            if (startIndex + i < articles.Count)
+            {
+                html += RenderArticleCard(articles[startIndex + i], "").ToString();
+            }
+        }
+        return Html.Raw(html);
+    }
+    
+    IHtmlContent RenderThreeArticles(List<IPublishedContent> articles, int startIndex)
+    {
+        var html = "<div class='articles-left-column'>";
+        html += RenderArticleCard(articles[startIndex], "article-large").ToString();
+        html += "</div><div class='articles-right-column'>";
+        
+        for (int i = 1; i < 3; i++)
+        {
+            if (startIndex + i < articles.Count)
+            {
+                html += RenderArticleCard(articles[startIndex + i], "article-small").ToString();
+            }
+        }
+        html += "</div>";
+        return Html.Raw(html);
+    }
+    
+    IHtmlContent RenderArticleCard(IPublishedContent article, string sizeClass)
+    {
+        if (article == null) return Html.Raw("");
+        
+        var articleImage = article.Value<IPublishedContent>("articleImage");
+        var articleTags = article.Value<IEnumerable<string>>("articleTags");
+        var title = article.Value<string>("title");
+        var description = article.Value<string>("description");
+        var url = article.Url();
+        
+        var tagsDataAttr = articleTags != null
+            ? string.Join(" ", articleTags.Select(t => t.Trim().ToLowerInvariant()))
+            : "";
+
+        var html = $"<div class='article-preview {sizeClass}' data-tags='{tagsDataAttr}'>" +
+                   $"<a href='{url}' class='article-link'>";
+        
+        if (articleImage != null)
+        {
+            html += $"<img src='{articleImage.Url()}' alt='Article Image' class='article-image' />";
+        }
+            
+        // Tags
+        if (articleTags?.Any() == true)
+        {
+            html += "<div class='article-tags'>";
+            foreach (var tag in articleTags)
+            {
+                html += $"<span class='article-tag'>{tag}</span>";
+            }
+            html += "</div>";
+        }
+        
+        html += "<div class='article-content'>";
+        if (!string.IsNullOrEmpty(title))
+        {
+            html += $"<h2 class='article-title'>{title}</h2>";
+        }
+        if (!string.IsNullOrEmpty(description))
+        {
+            html += $"<div class='article-description'>{description}</div>";
+        }
+        html += "</div>";
+        
+        html += "</a></div>";
+        return Html.Raw(html);
+    }
+}

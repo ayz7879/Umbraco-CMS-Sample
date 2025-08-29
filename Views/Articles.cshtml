@@ -1,0 +1,175 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels
+@using Umbraco.Extensions
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Articles>
+@{
+    Layout = "master.cshtml";
+    
+    // Get current article tags
+    var currentTags = Model.Value<IEnumerable<string>>("articleTags")?.ToList() ?? new List<string>();
+    
+    // Get related articles based on matching tags
+    var relatedArticles = Model.Parent?.Children
+        ?.Where(x => 
+            x.Id != Model.Id && 
+            x.ContentType.Alias == "articles" &&
+            x.Value<IEnumerable<string>>("articleTags") != null &&
+            x.Value<IEnumerable<string>>("articleTags").Any(tag => currentTags.Contains(tag))
+        )
+        .OrderByDescending(x => x.CreateDate)
+        .Take(3)
+        .ToList() ?? new List<IPublishedContent>();
+}
+
+<link rel="stylesheet" href="~/css/Article-Detail-Page.css" />
+@Html.Partial("~/Views/Partials/SectionHeader.cshtml", Model.Parent)
+<div class="article-detail-page">
+    <!-- Article Header -->
+    <header class="article-header">
+        <!-- Back Button -->
+        <button class="back-button" onclick="history.back()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            Back
+        </button>
+
+        <!-- Article Title -->
+        <h1 class="article-title">@Model.Name</h1>
+
+        <!-- Article Meta Information -->
+        <div class="article-meta">
+            <span class="article-date">@Model.CreateDate.ToString("MMM dd, yyyy")</span>
+            <span class="article-read-time">@((Model.Value<int?>("minutesOfRead") ?? 4).ToString()) minute read</span>
+
+            <!-- Share Section -->
+            <div class="article-share">
+                <span class="share-text">Share</span>
+                <div class="share-icons">
+                    @{
+                        var facebookLink = Model.Value<string>("facebook");
+                        var twitterLink = Model.Value<string>("twitter");
+                        var emailLink = Model.Value<string>("email");
+                        var websiteLink = Model.Value<string>("link");
+                    }
+                    
+                    @if (!string.IsNullOrEmpty(facebookLink))
+                    {
+                        <a href="@facebookLink" class="share-icon facebook" target="_blank">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                        </a>
+                    }
+
+                    @if (!string.IsNullOrEmpty(twitterLink))
+                    {
+                        <a href="@twitterLink" class="share-icon twitter" target="_blank">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                            </svg>
+                        </a>
+                    }
+
+                    @if (!string.IsNullOrEmpty(emailLink))
+                    {
+                        <a href="mailto:@emailLink" class="share-icon email">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                            </svg>
+                        </a>
+                    }
+
+                    @if (!string.IsNullOrEmpty(websiteLink))
+                    {
+                        <a href="@websiteLink" class="share-icon link" target="_blank">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                            </svg>
+                        </a>
+                    }
+                </div>
+            </div>
+
+            <!-- Article Tags -->
+            @if (currentTags.Any())
+            {
+                <div style="width: 100%; margin-top: 10px;">
+                    @foreach (var tag in currentTags)
+                    {
+                        <span class="article-tag">@tag</span>
+                    }
+                </div>
+            }
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="article-content">
+        <!-- Article Image -->
+        @{
+            var articleImage = Model.Value<IPublishedContent>("articleImage");
+        }
+        @if (articleImage != null)
+        {
+            <img src="@articleImage.Url()" alt="@Model.Name" class="article-image" />
+        }
+
+        <!-- Article Description -->
+        <div class="article-description">
+            @{
+                var description = Model.Value<string>("description");
+            }
+            @if (!string.IsNullOrEmpty(description))
+            {
+                @Html.Raw(description.Replace(Environment.NewLine, "</p><p>").Insert(0, "<p>") + "</p>")
+            }
+        </div>
+    </main>
+
+    <!-- More Articles Section -->
+    @if (relatedArticles.Any())
+    {
+        <section class="more-articles-section mb-5">
+            <h2 class="more-articles-title">More Articles</h2>
+            <div class="articles-grid">
+                @foreach (var article in relatedArticles)
+                {
+                    <a href="@article.Url()" class="article-card">
+                        @{
+                            var cardImage = article.Value<IPublishedContent>("articleImage");
+                            var cardTags = article.Value<IEnumerable<string>>("articleTags")?.FirstOrDefault();
+                        }
+                        
+                        @if (cardImage != null)
+                        {
+                            <img src="@cardImage.Url()" alt="@article.Name" class="article-card-image" />
+                        }
+                        
+                        <div class="article-card-overlay"></div>
+                        
+                        <div class="article-card-content">
+                            @if (!string.IsNullOrEmpty(cardTags))
+                            {
+                                <span class="article-card-tag">@cardTags</span>
+                            }
+                            
+                            <div class="article-card-date">@article.CreateDate.ToString("MMM dd, yyyy")</div>
+                            <h3 class="article-card-title">@article.Name</h3>
+                            
+                            <span class="article-card-read-more">
+                                Read More
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <polyline points="12,16 16,12 12,8"/>
+                                    <line x1="8" y1="12" x2="16" y2="12"/>
+                                </svg>
+                            </span>
+                        </div>
+                    </a>
+                }
+            </div>
+        </section>
+    }
+</div>
+

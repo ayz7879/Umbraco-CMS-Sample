@@ -1,0 +1,57 @@
+﻿@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels
+@using Umbraco.Extensions
+@using Umbraco.Cms.Core.Models.Blocks
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.ContentPage>
+@{
+    Layout = "master.cshtml";
+    var about = Model;
+}
+@Html.Partial("~/Views/Partials/SectionHeader.cshtml")
+<section class="section">
+    <!-- Company Intro -->
+    <section class="mb-5">
+        <div class="lead text-center">
+            @about.Value("companyIntro")
+        </div>
+    </section>
+    <!-- Team Members -->
+    <section>
+        <h2 class="text-center mb-4">@about.Value("teamText")</h2>
+        <div class="row">
+            @if (about.Value<BlockListModel>("teamMembers") is BlockListModel team)
+            {
+                foreach (var item in team)
+                {
+                    var member = item.Content;
+                    var memberPhoto = member.Value<IPublishedContent>("memberPhoto");
+                    <div class="col-md-4 mb-4">
+                        <div class="card shadow-sm h-100 text-center">
+                            <img src="@(memberPhoto?.Url() ?? "")"
+                                 class="card-img-top rounded-circle mx-auto mt-3"
+                                 style="width:150px; height:150px; object-fit:cover;"
+                                 alt="@member.Value("memberName")" />
+                            <div class="card-body">
+                                <h5 class="card-title">@member.Value("memberName")</h5>
+                                <p class="text-muted">@member.Value("memberRole")</p>
+                                <p class="card-text">@member.Value("memberBio")</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </section>
+    <!-- <div class="container">
+        <div class="col-md-3">
+            <nav class="nav-bar nav-bar--list">
+                @Html.Partial("~/Views/Partials/Navigation/SubNavigation.cshtml")
+            </nav>
+        </div>
+        <div class="col-md-9">
+            <article>
+                @await Html.GetBlockGridHtmlAsync(Model, "bodyText")
+            </article>
+        </div>
+    </div> -->
+</section>
+<link rel="stylesheet" href="@Url.Content("~/css/umbraco-starterkit-blockgrid.css")" />

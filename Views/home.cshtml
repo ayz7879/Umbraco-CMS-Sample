@@ -1,0 +1,122 @@
+﻿@using Umbraco.Extensions
+@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Home>
+    @using Umbraco.Cms.Core.Models.Blocks
+@{
+    Layout = "master.cshtml";
+    var backgroundImage = Model.HeroBackgroundImage != null ? Model.HeroBackgroundImage.Url() : String.Empty;
+    var welcome = Model.Value<IHtmlContent>("welcomeText");
+}
+
+<!-- Link to external stylesheet -->
+<link rel="stylesheet" href="~/css/home-styles.css">
+
+<!-- Hero Section -->
+<section class="hero-section position-relative background-image-full overlay overlay--dark section--content-center vh-100 d-flex align-items-center justify-content-center text-white"
+         style="background-image: url('@backgroundImage')">
+    <div class="container text-center">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <h1 class="display-3 fw-bold mb-4 hero-title">@Model.HeroHeader</h1>
+                <p class="lead fs-4 mb-5 hero-description">@Model.HeroDescription</p>
+                @if (Model.HeroCtalink != null)
+                {
+                    <a class="btn btn-outline-light btn-lg px-5 py-3 rounded-pill hero-cta" 
+                       href="@Model.HeroCtalink.Url()">
+                        @Model.HeroCtacaption
+                        <i class="fas fa-arrow-right ms-2"></i>
+                    </a>
+                }
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scroll indicator -->
+    <div class="position-absolute bottom-0 start-50 translate-middle-x mb-4">
+        <i class="fas fa-chevron-down text-white scroll-indicator"></i>
+    </div>
+</section>
+
+<!-- Welcome Section - Moved to top after hero -->
+<section class="py-5 bg-gradient welcome-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 text-center">
+                <div class="welcome-content">
+                    @if (Model.HasValue("welcomeText"))
+                    {
+                        @Html.Raw(Model.Value("welcomeText"))
+                    }
+                    else if (welcome != null)
+                    {
+                        @Html.Raw(welcome.ToString())
+                    }
+                    else
+                    {
+                        <div class="welcome-placeholder">
+                            <h2 class="display-6 fw-bold text-primary mb-3">Welcome</h2>
+                            <p class="lead text-muted">Content will appear here when configured.</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Highlights Section -->
+<section class="py-5 bg-light highlights-section">
+    <div class="container">
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-8 text-center">
+                <h2 class="display-5 fw-bold mb-3 section-title">Our Highlights</h2>
+                <p class="lead text-muted">Discover what makes us stand out</p>
+                <div class="section-divider mx-auto"></div>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            @await Html.GetBlockListHtmlAsync(Model, "highlights")
+        </div>
+    </div>
+</section>
+
+<!-- Latest Blog Heading -->
+<section class="py-4 text-center">
+    <div class="container">
+        <h2 class="display-5 fw-bold mb-4">Latest Blog</h2>
+    </div>
+</section>
+<!-- Body Content Section -->
+<section class="py-5 content-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="content-wrapper">
+                    @await Html.GetBlockGridHtmlAsync(Model.BodyText)
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer CTA Section -->
+<section class="section section--themed">
+
+    <div class="container">
+        <div class="row">
+
+            <div class="ta-center">
+                <h2>@Model.FooterHeader</h2>
+                <p class="section__description mw-640 ma-h-auto">@Model.FooterDescription</p>
+
+                <a class="button button--border--light_solid" href="@Model.FooterCtalink.Url()">
+                    @Model.FooterCtacaption
+                </a>
+
+            </div>
+
+        </div>
+    </div>
+
+</section>

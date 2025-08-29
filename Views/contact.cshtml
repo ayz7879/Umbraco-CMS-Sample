@@ -1,0 +1,130 @@
+﻿@using Umbraco.SampleSite.Models
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.Contact>
+@{
+    Layout = "master.cshtml";
+}
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+    <link href="~/css/contact-modern.css" rel="stylesheet" />
+
+
+@* Header Section *@
+<section class="contact-header">
+    <div class="container">
+        <div class="row justify-content-center text-center">
+            <div class="col-lg-8" style="margin-top:3rem">
+                <h1 class="display-4 fw-bold mb-4 mt-4" >@Model.Value("pageTitle")</h1>
+                <p class="lead mb-0">We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+            </div>
+        </div>
+    </div>
+    <div class="header-wave"></div>
+</section>
+
+@* Main Contact Section *@
+<section class="contact-section">
+    <div class="container">
+        <div class="row g-5">
+            @* Contact Information *@
+            <div class="col-lg-5">
+                <div class="contact-info-card">
+                    <div class="info-header">
+                        <h2 class="h3 fw-bold mb-3">Get in Touch</h2>
+                        <p class="text-muted mb-4">Ready to start your next project with us? Give us a call or send us an email.</p>
+                    </div>
+                    
+                    @* Contact Details *@
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <div class="contact-content w-100">
+                                <h5>Address</h5>
+                                @Model.MapCoordinates
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="contact-content">
+                                <h5>Phone</h5>
+                                <p>+91 7879701086</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="contact-content">
+                                <h5>Email</h5>
+                                <p>yashish396@gmail.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="contact-content">
+                                <h5>Business Hours</h5>
+                                <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    @* Social Links *@
+                    <div class="social-links">
+                        <h6 class="mb-3">Follow Us</h6>
+                        <div class="d-flex gap-3">
+                            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            @* Contact Form *@
+            <div class="col-lg-7">
+                <div class="contact-form-card">
+                    <div class="form-header">
+                        <h2 class="h3 fw-bold mb-3">Send us a Message</h2>
+                        <p class="text-muted mb-4">Fill out the form below and we'll get back to you within 24 hours.</p>
+                    </div>
+                    
+                    @* Umbraco Form with Custom Wrapper *@
+                    <div class="umbraco-form-wrapper">
+                        @await Component.InvokeAsync("RenderForm", new {
+                            formId = Guid.Parse("d9048d52-0f70-45ae-930b-23f1ba046c93"),
+                            theme = "bootstrap5"
+                        })
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        
+        @* Map Section (if coordinates available) *@
+
+            <div class="row mt-5">
+                <div class="col-12">
+                    <div class="map-section">
+                        <h3 class="text-center mb-4">@Model.MapHeader</h3>
+                        <div class="map-container">
+                            @* Add your map implementation here *@
+                            <div class="map-placeholder">
+                                @Model.MapCoordinates
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+</section>
+
+
+    <script src="~/js/contact-form.js"></script>

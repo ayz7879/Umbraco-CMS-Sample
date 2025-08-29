@@ -1,0 +1,645 @@
+
+
+
+.banner-content {
+    position: relative;
+    height: 100%;
+    max-width: 1200px;
+    margin: 5rem 10rem 10rem auto;
+    display: flex;
+    align-items: center;
+    padding: 0 30px;
+}
+
+
+
+.banner-text {
+    position: relative;
+    z-index: 2;
+    color: white;
+    max-width: 65%;
+}
+
+.banner-text h1 {
+    font-size: 4.5rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    margin-bottom: 25px;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.banner-text p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    opacity: 0.95;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+
+
+/* Main Content Wrapper */
+.main-content-wrapper {
+    min-height: calc(100vh - 350px);
+    padding: 0;
+}
+
+.content-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    gap: 30px;
+    padding: 30px 20px;
+}
+
+/* Left Navigation Styles */
+.left-navigation-itra {
+    flex: 0 0 300px;
+    height: fit-content;
+    position: sticky;
+    top: 30px;
+}
+
+.itra-navigation-itra {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    border: 1px solid #e9ecef;
+}
+
+.nav-menu-itra {
+    width: 100%;
+}
+
+.nav-links-itra {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-item-itra {
+    border-bottom: 1px solid #f1f3f4;
+    transition: all 0.2s ease;
+}
+
+.nav-item-itra:last-child {
+    border-bottom: none;
+}
+
+.nav-item-itra:hover {
+    background-color: #f8f9fa;
+    transform: translateX(2px);
+}
+
+.nav-link-itra {
+    display: flex;
+    align-items: center;
+    padding: 16px 20px;
+    text-decoration: none;
+    color: #495057;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    font-weight: 500;
+    border-left: 3px solid transparent;
+}
+
+.nav-link-itra:hover {
+    color: #28a745;
+    border-left-color: #28a745;
+}
+
+.nav-item-itra.active .nav-link-itra {
+    background-color: #28a745;
+    color: white;
+    border-left-color: #20c997;
+    font-weight: 600;
+}
+
+.nav-item-itra.active:hover {
+    background-color: #28a745;
+    transform: none;
+}
+
+.nav-item-itra.active .nav-link-itra:hover {
+    background-color: #218838;
+    color: white;
+    border-left-color: #20c997;
+}
+
+.nav-icon-itra {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    margin-right: 15px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.nav-text-itra {
+    flex: 1;
+    line-height: 1.4;
+}
+
+/* Right Content Area */
+.right-content {
+    flex: 1;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    padding: 40px;
+    min-height: 600px;
+    border: 1px solid #e9ecef;
+}
+
+.right-content h1 {
+    color: #2c3e50;
+    font-size: 2.8rem;
+    margin-bottom: 30px;
+    border-bottom: 3px solid #28a745;
+    padding-bottom: 15px;
+    font-weight: 600;
+}
+
+.right-content h2 {
+    color: #34495e;
+    font-size: 2rem;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    padding-left: 20px;
+    border-left: 4px solid #28a745;
+    font-weight: 600;
+}
+
+.right-content h3 {
+    color: #495057;
+    font-size: 1.5rem;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.right-content p {
+    color: #6c757d;
+    line-height: 1.8;
+    margin-bottom: 20px;
+    text-align: justify;
+    font-size: 15px;
+}
+
+.right-content ul {
+    margin-left: 25px;
+    margin-bottom: 25px;
+}
+
+.right-content li {
+    color: #6c757d;
+    margin-bottom: 10px;
+    line-height: 1.7;
+    font-size: 15px;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .banner-text {
+        max-width: 70%;
+    }
+    
+    .runner-image {
+        width: 220px;
+        height: 220px;
+        right: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .content-container {
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px 15px;
+    }
+    
+    .left-navigation {
+        flex: none;
+        position: static;
+        order: 2;
+    }
+    
+    .right-content {
+        order: 1;
+        padding: 25px;
+    }
+    
+    .banner-text {
+        max-width: 100%;
+        text-align: center;
+    }
+    
+    .banner-text h1 {
+        font-size: 3rem;
+    }
+    
+    .runner-image {
+        display: none;
+    }
+    
+    .itra-banner {
+        height: 280px;
+    }
+}
+
+@media (max-width: 576px) {
+    .banner-text h1 {
+        font-size: 2.5rem;
+    }
+    
+    .banner-text p {
+        font-size: 1rem;
+    }
+    
+    .content-container {
+        padding: 15px 10px;
+    }
+    
+    .right-content {
+        padding: 20px;
+    }
+    
+    .right-content h1 {
+        font-size: 2.2rem;
+    }
+    
+    .nav-link {
+        padding: 14px 16px;
+        font-size: 13px;
+    }
+}
+
+/* Loading Animation */
+.nav-item {
+    animation: slideInLeft 0.4s ease-out;
+    animation-fill-mode: both;
+}
+
+.nav-item:nth-child(1) { animation-delay: 0.1s; }
+.nav-item:nth-child(2) { animation-delay: 0.15s; }
+.nav-item:nth-child(3) { animation-delay: 0.2s; }
+.nav-item:nth-child(4) { animation-delay: 0.25s; }
+.nav-item:nth-child(5) { animation-delay: 0.3s; }
+.nav-item:nth-child(6) { animation-delay: 0.35s; }
+.nav-item:nth-child(7) { animation-delay: 0.4s; }
+.nav-item:nth-child(8) { animation-delay: 0.45s; }
+.nav-item:nth-child(9) { animation-delay: 0.5s; }
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Custom Scrollbar */
+.right-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.right-content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.right-content::-webkit-scrollbar-thumb {
+    background: #28a745;
+    border-radius: 4px;
+}
+
+.right-content::-webkit-scrollbar-thumb:hover {
+    background: #218838;
+}
+
+/* Print Styles */
+@media print {
+    .left-navigation {
+        display: none;
+    }
+    
+    .right-content {
+        box-shadow: none;
+        border: none;
+    }
+    
+    .itra-banner {
+        height: 200px;
+    }
+}
+
+
+
+/* Block List Content Styles */
+.about-content-blocks {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.content-block-item {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.block-image-container {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+}
+
+.block-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+
+.block-title {
+    color: #2c3e50;
+    font-size: 2.2rem;
+    font-weight: 700;
+    line-height: 1.3;
+    border-bottom: 3px solid #28a745;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.block-subtitle {
+    color: #34495e;
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    padding-left: 20px;
+    border-left: 4px solid #28a745;
+    line-height: 1.4;
+}
+
+/* Rich Text Content - Preserve ALL RTE formatting */
+.block-content {
+    /* Reset all custom styling to let RTE styles show naturally */
+    all: initial;
+    display: block;
+    font-family: inherit;
+    color: inherit;
+}
+
+/* Preserve RTE default styling for all elements */
+.block-content * {
+    all: revert;
+}
+
+/* Essential RTE element styles */
+.block-content h1 {
+    font-size: 2em;
+    font-weight: bold;
+    margin: 0.67em 0;
+}
+
+.block-content h2 {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin: 0.75em 0;
+}
+
+.block-content h3 {
+    font-size: 1.17em;
+    font-weight: bold;
+    margin: 0.83em 0;
+}
+
+.block-content h4 {
+    font-size: 1em;
+    font-weight: bold;
+    margin: 1.12em 0;
+}
+
+.block-content h5 {
+    font-size: 0.83em;
+    font-weight: bold;
+    margin: 1.5em 0;
+}
+
+.block-content h6 {
+    font-size: 0.75em;
+    font-weight: bold;
+    margin: 1.67em 0;
+}
+
+.block-content p {
+    margin: 1em 0;
+    line-height: 1.5;
+}
+
+.block-content ul {
+    display: block;
+    list-style-type: disc;
+    margin: 1em 0;
+    padding-left: 40px;
+}
+
+.block-content ol {
+    display: block;
+    list-style-type: decimal;
+    margin: 1em 0;
+    padding-left: 40px;
+}
+
+.block-content li {
+    display: list-item;
+    margin: 0.5em 0;
+}
+
+.block-content strong {
+    font-weight: bold;
+}
+
+.block-content em {
+    font-style: italic;
+}
+
+.block-content u {
+    text-decoration: underline;
+}
+
+.block-content a {
+    color: #0066cc;
+    text-decoration: underline;
+}
+
+.block-content a:hover {
+    color: #0052a3;
+}
+
+/* TABLE STYLES - Most Important for your issue */
+.block-content table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1em 0;
+    border: 1px solid #ccc;
+}
+
+.block-content table th {
+    background-color: #f8f9fa;
+    border: 1px solid #ccc;
+    padding: 8px 12px;
+    text-align: left;
+    font-weight: bold;
+}
+
+.block-content table td {
+    border: 1px solid #ccc;
+    padding: 8px 12px;
+    vertical-align: top;
+}
+
+.block-content table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.block-content table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Blockquote styles */
+.block-content blockquote {
+    margin: 1em 40px;
+    padding-left: 20px;
+    border-left: 4px solid #ccc;
+    font-style: italic;
+    color: #666;
+}
+
+/* Image styles in RTE */
+.block-content img {
+    max-width: 100%;
+    height: auto;
+    margin: 1em 0;
+}
+
+/* Code styles */
+.block-content code {
+    background-color: #f4f4f4;
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-family: monospace;
+    font-size: 0.9em;
+}
+
+.block-content pre {
+    background-color: #f4f4f4;
+    padding: 10px;
+    border-radius: 3px;
+    overflow-x: auto;
+    margin: 1em 0;
+}
+
+.block-content pre code {
+    background: none;
+    padding: 0;
+}
+
+.empty-content-message {
+    text-align: center;
+    padding: 60px 40px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    border: 2px dashed #dee2e6;
+}
+
+.empty-content-message h2 {
+    color: #6c757d;
+    margin-bottom: 15px;
+    font-size: 1.8rem;
+}
+
+.empty-content-message p {
+    color: #adb5bd;
+    font-size: 1.1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .block-text-content {
+        padding: 20px;
+    }
+    
+    .block-title {
+        font-size: 1.8rem;
+    }
+    
+    .block-subtitle {
+        font-size: 1.2rem;
+        padding-left: 15px;
+    }
+    
+    .block-image-container {
+        height: 250px;
+    }
+    
+    .about-content-blocks {
+        gap: 25px;
+    }
+    
+    /* Make tables responsive */
+    .block-content table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}
+
+@media (max-width: 576px) {
+    .block-title {
+        font-size: 1.6rem;
+    }
+    
+    .block-subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .block-image-container {
+        height: 200px;
+    }
+    
+    .block-text-content {
+        padding: 15px;
+    }
+    
+    /* Stack table on mobile if needed */
+    .block-content table,
+    .block-content tbody,
+    .block-content th,
+    .block-content td,
+    .block-content tr {
+        display: block;
+    }
+    
+    .block-content table {
+        border: 1px solid #ccc;
+    }
+    
+    .block-content th,
+    .block-content td {
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding: 10px 15px;
+    }
+}
+
+

@@ -1,0 +1,133 @@
+﻿@using Umbraco.Cms.Core.Models.PublishedContent
+@using Umbraco.Cms.Core.Routing
+@using Umbraco.Extensions
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@using System.Globalization
+@using Umbraco.Cms.Core.Models
+@using Umbraco.Cms.Core.Services
+@inject ILocalizationService LocalizationService
+@{
+    var languages = LocalizationService.GetAllLanguages();
+
+    // Function to get only language name from culture (remove region)
+    Func<CultureInfo, string> getLanguageNameOnly = culture =>
+    {
+        var name = culture.EnglishName;
+        var idx = name.IndexOf('(');
+        if (idx > 0)
+            return name.Substring(0, idx).Trim();
+        return name;
+    };
+    
+    var currentPath = Context.Request.Path.Value ?? "/";
+    var pathSegments = currentPath.Trim('/').Split('/', StringSplitOptions.RemoveEmptyEntries);
+    
+    // Dynamic list of supported languages from Umbraco
+    var supportedLangs = languages.Select(l => l.IsoCode.Substring(0, 2).ToLower()).ToList();
+
+    bool hasLangPrefix = pathSegments.Length > 0 && supportedLangs.Contains(pathSegments[0]);
+    var site = Model.Root();
+    var selection = site.Children.Where(x => x.IsVisible());
+    
+    // Get current language dynamically from Umbraco
+    var currentCulture = Model.GetCultureFromDomains();
+    var currentLang = "en"; // default fallback
+    
+    // Dynamic language detection instead of hardcoded if-else
+    if (!string.IsNullOrEmpty(currentCulture))
+    {
+        // Extract language code from culture (e.g., "en-US" -> "en")
+        currentLang = currentCulture.Split('-')[0].ToLower();
+        
+        // Validate if the detected language is in supported languages list
+        if (!supportedLangs.Contains(currentLang))
+        {
+            currentLang = "en"; // fallback to default
+        }
+    }
+    else
+    {
+        // Fallback: check URL path for language prefix
+        var pathParts = Context.Request.Path.Value?.Split('/', StringSplitOptions.RemoveEmptyEntries);
+        if (pathParts != null && pathParts.Length > 0 && supportedLangs.Contains(pathParts[0]))
+        {
+            currentLang = pathParts[0];
+        }
+    }
+    
+    // Get current language display name dynamically
+    var currentLanguageObj = languages.FirstOrDefault(l => l.IsoCode.StartsWith(currentLang, StringComparison.OrdinalIgnoreCase));
+    var currentLanguageDisplayName = currentLanguageObj != null 
+        ? getLanguageNameOnly(currentLanguageObj.CultureInfo) 
+        : currentLang.ToUpper();
+}
+
+<!-- Navigation Links -->
+<a class="nav-link @Html.Raw(Model.Id == site.Id ? "nav-link--active" : "")" href="@site.Url()">@site.Name</a>
+
+@foreach (var item in selection)
+{
+    var isActive = item.IsAncestorOrSelf(Model) ? "nav-link--active" : "";
+    
+    // Check if it's the "About ITRA" page
+    if (item.Name == "About ITRA")
+    {
+        var aboutChildren = item.Children().Where(x => x.IsVisible());
+
+        <div class="nav-item dropdown @(isActive)">
+            <a class="nav-link dropdown-toggle" href="@item.Url()" data-bs-toggle="dropdown" aria-expanded="false">
+                @item.Name
+            </a>
+            <ul class="dropdown-menu">
+                @foreach (var child in aboutChildren)
+                {
+                    <li>
+                        <a class="dropdown-item @(child.Id == Model.Id ? "active" : "")" href="@child.Url()">
+                            @child.Name
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+    }
+    else
+    {
+        // Regular nav item
+        <a class="nav-link @isActive" href="@item.Url()">@item.Name</a>
+    }
+}
+
+
+<!-- Dynamic Language Dropdown -->
+<div class="dropdown">
+    <button class="btn btn-primary dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+        <span id="languageDropdownText">@currentLanguageDisplayName</span>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="languageDropdown">
+        @foreach (var language in languages)
+        {
+            var languageNameOnly = getLanguageNameOnly(language.CultureInfo);
+            var langCode = language.IsoCode.Substring(0, 2).ToLower();
+
+            // Build URL with replaced language prefix
+            string newUrl;
+            if (hasLangPrefix)
+            {
+                pathSegments[0] = langCode;
+                newUrl = "/" + string.Join("/", pathSegments);
+            }
+            else
+            {
+                newUrl = "/" + langCode + currentPath;
+            }
+
+            <li>
+                <a class="dropdown-item lang-option @(currentLang == langCode ? "active" : "")" 
+                   data-lang="@langCode" 
+                   href="@newUrl">
+                    @languageNameOnly
+                </a>
+            </li>
+        }
+    </ul>
+</div>

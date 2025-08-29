@@ -1,0 +1,185 @@
+﻿@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels
+@using Microsoft.AspNetCore.Mvc.Rendering
+@using Umbraco.Extensions
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.Blogpost>
+@{
+    Layout = "master.cshtml";
+    var featuredImage = Model.Value<IPublishedContent>("blogImage");
+    var author = Model.Value("blogAuthor");
+    var tags = Model.Value<IEnumerable<string>>("tags");
+    
+    var currentCategories = Model.Value<IEnumerable<string>>("categories")
+                                ?.Select(x => x.Trim().ToLowerInvariant()).ToList();
+
+    var relatedPosts = Model.Parent.Children
+        .Where(x =>
+            x.Id != Model.Id &&
+            x.ContentType.Alias == "blogpost" &&
+            x.Value<IEnumerable<string>>("categories")
+                .Select(tag => tag.Trim().ToLowerInvariant())
+                .Any(tag => currentCategories.Contains(tag))
+        )
+        .OrderByDescending(x => x.CreateDate)
+        .Take(3);
+}
+
+
+
+<!-- Hero Section -->
+<section class="blog-hero">
+    @{
+        var blogImage = Model.Value<IPublishedContent>("blogImage");
+    }
+    @if (blogImage != null)
+    {
+        <div class="blog-hero-image">
+            <img src="@(blogImage?.Url() ?? "")" alt="@Model.Value("blogTitle")" class="hero-img">
+            <div class="hero-overlay"></div>
+        </div>
+    }
+    <div class="hero-content">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="hero-text text-center text-white">
+                        <div class="blog-meta-hero mb-4">
+                            @if (Model.Categories != null && Model.Categories.Any())
+                            {
+                                <div class="categories-hero mb-3">
+                                    @Html.Partial("~/Views/Partials/CategoryLinks.cshtml", Model.Categories)
+                                </div>
+                            }
+                            <div class="meta-info d-flex justify-content-center align-items-center flex-wrap">
+                                @if (!string.IsNullOrEmpty(author?.ToString()))
+                                {
+                                    <span class="author-info me-4">
+                                        <i class="fas fa-user-circle me-2"></i>
+                                        <strong>@author</strong>
+                                    </span>
+                                }
+                                <span class="date-info">
+                                    <i class="far fa-calendar-alt me-2"></i>
+                                    @Model.CreateDate.ToString("MMMM dd, yyyy")
+                                </span>
+                            </div>
+                        </div>
+                        <h1 class="hero-title display-4 fw-bold">
+                            @(Model.Value("blogTitle") ?? Model.Name)
+                        </h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main Content -->
+<section class="blog-content-section py-5">
+    <div class="container">
+        <div class="row">
+            <!-- Main Article -->
+            <div class="">
+                <article style="width:100% !important" class="blog-article">
+                    <!-- Article Content -->
+                    <div class="article-content">
+                        @await Html.GetBlockGridHtmlAsync(Model, "bodyText")
+                    </div>
+
+                    <!-- Tags Section -->
+                    @if (tags != null && tags.Any())
+                    {
+                        <div class="tags-section mt-5 pt-4 border-top">
+                            <h5 class="tags-title mb-3">
+                                <i class="fas fa-tags me-2"></i>Tags
+                            </h5>
+                            <div class="tags-list">
+                                @foreach (var tag in tags)
+                                {
+                                    <span class="tag-item badge me-2 mb-2">#@tag</span>
+                                }
+                            </div>
+                        </div>
+                    }
+
+                    <!-- Author Bio -->
+                    @if (!string.IsNullOrEmpty(author?.ToString()))
+                    {
+                        <div class="author-bio mt-5 pt-4 border-top">
+                            <div class="author-card p-4">
+                                <div class="d-flex align-items-start">
+                                    <div class="author-avatar me-4">
+                                        <img src="https://ui-avatars.com/api/?name=@Uri.EscapeDataString(author.ToString())&size=80&background=667eea&color=ffffff&rounded=true" 
+                                             alt="@author" class="rounded-circle">
+                                    </div>
+                                    <div class="author-info flex-grow-1">
+                                        <h5 class="author-name mb-2">@author</h5>
+                                        <p class="author-description text-muted mb-0">
+                                            Content writer and digital enthusiast.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </article>
+            </div>
+
+            <!-- Sidebar -->
+             <div class="col-lg-4">
+                <aside class="blog-sidebar">
+                    <!-- Related Posts -->
+                    @if (relatedPosts.Any())
+                    {
+                        <div class="sidebar-widget related-posts">
+                            <h4 class="widget-title">
+                                <i class="fas fa-newspaper me-2"></i>Related Posts
+                            </h4>
+                            <div class="related-posts-list">
+                                @foreach (var relatedPost in relatedPosts)
+                                {
+                                    var relatedImage = relatedPost.Value<IPublishedContent>("blogImage");
+                                    <article class="related-post-item mb-4">
+                                        <a href="@relatedPost.Url()" class="text-decoration-none">
+                                            <div class="row g-3">
+                                                <div class="col-4">
+                                                    @if (relatedImage != null)
+                                                    {
+                                                        <img src="@(relatedImage?.Url() ?? "")" 
+                                                             alt="@relatedPost.Value("blogTitle")" 
+                                                             class="related-post-img">
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="related-post-placeholder">
+                                                            <i class="fas fa-image"></i>
+                                                        </div>
+                                                    }
+                                                </div>
+                                                <div class="col-8">
+                                                    <div class="related-post-content">
+                                                        <h6 class="related-post-title">
+                                                            @(relatedPost.Value("blogTitle") ?? relatedPost.Name)
+                                                        </h6>
+                                                        <small class="related-post-date text-muted">
+                                                            @relatedPost.CreateDate.ToString("MMM dd, yyyy")
+                                                        </small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </article>
+                                }
+                            </div>
+                        </div>
+                    }
+                </aside>
+            </div>
+
+
+           
+        </div>
+    </div>
+</section>
+
+<link rel="stylesheet" href="@Url.Content("~/css/blog-detail-styles.css")" />
+<link rel="stylesheet" href="@Url.Content("~/css/umbraco-starterkit-blockgrid.css")" />

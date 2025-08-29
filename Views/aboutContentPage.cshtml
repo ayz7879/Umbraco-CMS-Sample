@@ -1,0 +1,66 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@using Umbraco.Extensions;
+@using Umbraco.Cms.Core.Models.Blocks;
+@using Umbraco.Cms.Core.Strings;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = "AboutITRA.cshtml";  
+}
+<link rel="stylesheet" href="~/css/About-ITRA-Page.css" />
+
+@{
+    var aboutItraContentOrder = Model.Value<BlockListModel>("aboutItraContentOrder");
+}
+
+@if (aboutItraContentOrder != null && aboutItraContentOrder.Any())
+{
+    <div class="about-content-blocks">
+        @foreach (var block in aboutItraContentOrder)
+        {
+            var content = block.Content;
+            var image = content.Value<IPublishedContent>("image");
+            
+            var title = content.Value<string>("title");
+            var subtitle = content.Value<string>("subtitle");
+            var richContent = content.Value<IHtmlEncodedString>("content");
+            
+            <article class="content-block-item">
+                @if (image != null)
+                {
+                    <div class="block-image-container">
+                        <img src="@image.Url()" 
+                             alt="@(title ?? "Content Image")" 
+                             class="block-image" 
+                             loading="lazy" />
+                    </div>
+                }
+                
+                <div class="block-text-content">
+                    @if (!string.IsNullOrEmpty(title))
+                    {
+                        <h2 class="block-title">@title</h2>
+                    }
+                    
+                    @if (!string.IsNullOrEmpty(subtitle))
+                    {
+                        <h3 class="block-subtitle">@subtitle</h3>
+                    }
+                    
+                    @if (richContent != null && !string.IsNullOrEmpty(richContent.ToString()))
+                    {
+                        <div class="block-content">
+                            @Html.Raw(richContent)
+                        </div>
+                    }
+                </div>
+            </article>
+        }
+    </div>
+}
+else
+{
+    <div class="empty-content-message">
+        <h2>@Model.Name</h2>
+        <p>Content will be displayed here when blocks are added.</p>
+    </div>
+}

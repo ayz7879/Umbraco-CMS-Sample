@@ -1,0 +1,88 @@
+﻿@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels
+@using Umbraco.Cms.Core.Models.Blocks
+@using Umbraco.Extensions
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.ServicePage>
+@{
+    Layout = "master.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/service-styles.css">
+
+<!-- Hero Section -->
+<section class="services-hero">
+    <div class="container">
+        <div class="hero-content text-center">
+            <h1 class="hero-title">@Model.Value("pageTitle")</h1>
+            <p class="hero-subtitle">@Model.Value("introText")</p>
+            <div class="hero-divider"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section class="services-section">
+    <div class="container">
+        <!-- Section Header -->
+        <div class="section-header text-center mb-5">
+            <h2 class="section-title">@Model.Value("serviceTitle")</h2>
+            <p class="section-subtitle">@Model.Value("serviceDescription")</p>
+        </div>
+
+        <!-- Services Grid -->
+        <div class="services-grid">
+            @if (Model.Value<BlockListModel>("services") is BlockListModel services && services.Any())
+            {
+                foreach (var item in services)
+                {
+                    var service = item.Content;
+                    var icon = service.Value<IPublishedContent>("serviceIcon");
+                    
+                    <div class="service-card">
+                        <div class="service-card-inner">
+                            <!-- Icon Section -->
+                            <div class="service-icon">
+                                    <img src="@icon.Url()" alt="@service.Value("serviceTitle")" />
+                            </div>
+                            
+                            <!-- Content Section -->
+                            <div class="service-content">
+                                <h3 class="service-title">@service.Value("serviceTitle")</h3>
+                                <p class="service-description">@service.Value("serviceDescription")</p>
+                                <a href="#" class="service-link">
+                                    Learn More 
+                                    <span class="link-arrow">→</span>
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <!-- Hover Effect Overlay -->
+                        <div class="service-overlay"></div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="col-12 text-center">
+                    <p class="no-services">No services available at the moment.</p>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action Section -->
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-content text-center">
+            <h2 class="cta-title">Ready to Get Started?</h2>
+            <p class="cta-subtitle">Let's discuss how our services can help your business grow</p>
+            <div class="cta-buttons">
+                <a href="#" class="btn btn-primary-cta">Get Quote</a>
+                <a href="#" class="btn btn-secondary-cta">Contact Us</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Link to Custom CSS -->
+<link rel="stylesheet" href="@Url.Content("~/css/services-page.css")" />

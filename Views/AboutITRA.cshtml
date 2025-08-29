@@ -1,0 +1,62 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@using Umbraco.Extensions;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = "master.cshtml";
+    var site = Model.Root();
+    var aboutItraPage = site.Descendants().FirstOrDefault(x => x.Name == "About ITRA");
+    var childrenPages = aboutItraPage?.Children().Where(x => x.IsVisible());
+    var aboutPage = Model.AncestorOrSelf("aboutITRA");
+    var bannerImage = aboutPage?.Value<Umbraco.Cms.Core.Models.MediaWithCrops>("bannerImage");
+    var backgroundImage = bannerImage?.Url();
+}
+<link rel="stylesheet" href="~/css/About-ITRA-Page.css" />
+<!-- Top Banner Section -->
+<section class="itra-banner" style="
+    height: 500px;
+    background: url('@backgroundImage');
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;">
+    <div class="banner-content">
+        <div class="banner-overlay"></div>
+        <div class="banner-text">
+            <h1>@aboutPage.Value("bannerTitle")</h1>
+            <p>@aboutPage.Value("bannerDescription")</p>
+        </div>
+        <div class="runner-image"></div>
+    </div>
+</section>
+
+<!-- Main Content Section -->
+<section class="main-content-wrapper">
+    <div class="content-container">
+        <!-- Left Navigation -->
+        <section class="left-navigation-itra">
+            @if(aboutItraPage != null && childrenPages != null && childrenPages.Any())
+            {
+                <div class="itra-navigation-itra">
+                    <nav class="nav-menu-itra">
+                        <ul class="nav-links-itra">
+                            @foreach(var child in childrenPages)
+                            {
+                                var isActive = child.Id == Model.Id ? "active" : "";
+                                <li class="nav-item-itra @isActive">
+                                    <a href="@child.Url()" class="nav-link-itra" title="@child.Name">
+                                        <span class="nav-text-itra">@child.Name</span>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </nav>
+                </div>
+            }
+        </section>
+
+       <!-- Right Content Area -->
+        <section class="right-content">
+            @RenderBody()
+        </section>
+
+    </div>
+</section>
