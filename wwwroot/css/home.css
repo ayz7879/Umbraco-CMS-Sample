@@ -1,0 +1,830 @@
+.mt-30 {
+  margin-top: 30px;
+}
+.homeHeroBanner {
+  padding: 200px 0px;
+  background-size: cover;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+.homeHeroBanner::before{
+  position: absolute;
+  content: "";
+  width:100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.40) 0%, rgba(0, 0, 0, 0.40) 100%);
+}
+.homeHeroBanner h1{
+  color: #FFF;
+  text-align: center;
+  font-size: 56px;
+  font-weight: 700;
+  line-height: 60px; 
+  margin: 0px 0px 24px 0px;
+}
+.homeHeroBanner p {
+  color: #FFF;
+  text-align: center;
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 36px;
+  max-width: 760px;
+  margin: 0 auto;
+}
+.learnMoreBtn {
+  color: #585858;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 16px;
+  letter-spacing: -0.16px;
+  display: inline-flex;
+  padding: 16px 24px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  background: #FFF;
+  transition: all 0.3s ease-in-out;
+}
+.learnMoreBtn:hover{
+  color: #292D32;
+  text-decoration: none;
+  background-color: #A8D36A;
+}
+.banner-search-container {
+  max-width: 680px;
+  margin: 60px auto 0 auto;
+}
+.search-title{
+  color: #FFF;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 20px; 
+  margin-bottom: 17px;
+}
+.search-section {
+  text-align: center;
+  color: #fff;
+  display: block;
+  width: 100%;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 6px;
+  overflow: hidden;
+  padding: 14px 24px;
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.search-select {
+  color: #292D32;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 14px;
+  letter-spacing: -0.5px;
+  border: none;
+  background: #fff;
+  outline: none;
+  margin-right: 10px;
+}
+
+.search-box input {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 14px;
+  letter-spacing: -0.4px;
+  flex: 1;
+  border: none;
+  outline: none;
+  padding-left: 10px;
+  padding-right: 100px;
+  color: rgba(41, 45, 50, 0.80);
+  border-left: 1px solid #ccc;
+}
+
+.clear-btn {
+  position: absolute;
+  right: 70px;
+  color: #999;
+  font-size: 18px;
+  cursor: pointer;
+  display: none;
+  user-select: none;
+}
+
+.search-button {
+  background-color: #96cc4f;
+  border: none;
+  padding: 10px 20px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  height: 100%;
+  max-width: 108px;
+  width: 100%;
+  transition: background 0.3s;
+}
+
+.search-button:hover {
+  background-color: #7ebc3e;
+}
+
+/*--Initiative Css Star--*/
+.section-title {
+    color: #000;
+    text-align: center;
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 36px;
+    margin: 0px;
+    padding-bottom: 80px;
+    font-family: "Montserrat", sans-serif;
+}
+.initiatives-wrapper {
+    padding: 80px 0px;
+    background-color: #E6F2DA;
+}
+
+.initiatives-content h3 {
+  color: #292D32;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 18px;
+  text-transform: uppercase;
+  margin: 32px 0px 14px 0px;
+  padding:0;
+}
+.initiatives-content{
+  text-align: center;
+}
+.initiatives-content p {
+  color: #3E4247;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  margin-bottom: 24px;
+}
+.learn-more-link {
+  color: #000;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 16px;
+  letter-spacing: -0.16px;
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  transition: all 0.3s ease-in-out;
+}
+.learn-more-link:hover{
+  color:#000;
+}
+.membership-wrapper {
+    padding: 119px 0px 21px;
+}
+
+.membership-wrapper h2.section-title {
+  padding-bottom: 0;
+  margin: 0px 0px 24px 0;
+}
+.membershipTabs {
+  text-align: center;
+}
+.membershipTabs ul.nav.nav-pills {
+    text-align: center;
+    display: inline-flex;
+    padding: 4px;
+    border-radius: 4px;
+    align-items: center;
+    margin-bottom: 116px;
+    border: 1px solid #F3F3F3;
+    max-width: 322px;
+    width: 100%;
+}
+.membershipTabs ul.nav.nav-pills li {
+    width: 156px;
+}
+.membershipTabs .nav-pills>li.active>a, .membershipTabs .nav-pills>li.active>a:focus, .membershipTabs .nav-pills>li.active>a:hover {
+  border-radius: 4px;
+  background: #A8D36A;
+  color: #1B1B1B;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 16px;
+}
+.membershipTabs .nav>li>a {
+  padding: 12px 37px;
+  color: #1B1B1B;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 16px;
+}
+.membershipTabs .nav>li>a:focus, .membershipTabs .nav>li>a:hover {
+  background-color: transparent;
+}
+.free-account {
+  padding: 32px;
+  border-radius: 16px;
+  background: #FFF;
+  text-align: left;
+  box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.12);
+  min-height: 578px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.free-account h3 {
+  color: #000;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 32px; 
+  margin: 0px;
+  width: 100%;
+  padding-bottom: 32px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+.account-benefits {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: self-start;
+  flex: 1;
+}
+.free-account .account-benefits-list h4 {
+  color: #000;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 16px;
+  margin: 32px 0px;
+}
+.free-account .account-benefits-list ul {
+  padding: 0;
+  list-style: none;
+  margin-bottom: 16px;
+}
+
+.free-account .account-benefits-list ul li {
+  color: #000;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px; 
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-bottom: 24px;
+  gap: 16px;
+}
+.free-account .account-benefits-list ul li:last-child{
+  margin-bottom: 0px;
+}
+.free-account .account-benefits-list .learn-more-link {
+  margin-left: 38px;
+}
+.account-btn{
+  color: #1B1B1B;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 16px;
+  display: flex;
+  max-width: 495px;
+  width: 100%;
+  padding: 16px 24px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  background-color: #A8D36A;
+}
+.account-btn:hover, .account-btn:focus{
+  color: #000;
+  text-decoration: none;
+}
+.itra-subscription {
+    border-radius: 16px;
+    background-color: #212818;
+    padding: 4px;
+    transform: translateY(-55px);
+    -webkit-transform: translateY(-55px);
+    -moz-transform: translateY(-55px);
+    -ms-transform: translateY(-55px);
+    -o-transform: translateY(-55px);
+}
+
+.itra-subscription h3 {
+  color: #FFF;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 24px; 
+  margin: 0px;
+  padding: 16px 0px 20px 0;
+}
+.itra-price-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+.itra-price{
+  color: #000;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 24px; 
+}
+
+.itra-price span{
+  color: #827878;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 16px;
+}
+.itra-price span.dollar-sign {
+  color: #000;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 24px;
+}
+span.start-text {
+  color: rgb(0, 0, 0);
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 24px;
+}
+.itra-subscription .free-account {
+  padding-top: 16px;
+}
+.free-account .account-benefits-list ul li p {
+  max-width: 438px;
+  margin: 0px;
+}
+.itra-subscription .free-account .account-benefits-list ul li p {
+    max-width: 426px;
+}
+.account-benefits-list p {
+    color: #000;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    margin-bottom: 32px;
+}
+#organizer .free-account .account-benefits-list .learn-more-link {
+  margin-left: 0;
+}
+#organizer .free-account {
+  min-height: 432px;
+}
+.latest-news-wrapper {
+  padding: 80px 0 80px 0;
+}
+
+.latest-news-wrapper h2.section-title {
+  padding-bottom: 18px;
+  margin: 0px;
+}
+
+.news-img-container {
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.news-img-container img {
+  width: 100%;
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
+}
+.news-img-container:hover img {
+  transform: scale(1.1);
+}
+.latest-news span {
+  width: 100%;
+  display: inline-block;
+  padding: 24px 0px 16px 0;
+  color: #000;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 14px;
+  letter-spacing: -0.14px;
+}
+
+.latest-news h3 {
+  color: #000;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 18px;
+  margin: 0px 0 8px 0;
+}
+
+.latest-news p {
+  color: #000;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 24px;
+  margin-bottom: 16px;
+}
+.latest-news-wrapper .loadMoreWrapper .load-more-btn {
+  margin: 58px 0 0 0;
+}
+/*Runner Ranking Css*/
+.top-rankings.running-rankings {
+  max-width: 100%;
+  margin: 80px 0px 46px 0;
+}
+.top-rankings.running-rankings .section-title {
+  font-size: 36px;
+  margin: 0 0 50px;
+  padding: 0px;
+}
+/*.top-rankings.running-rankings .filter-buttons {
+  max-width: 881px;
+}*/
+
+/* Distance Modal Css*/
+.category-modal {
+/*    max-width: 480px;
+    width: auto;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 24px 8px;
+    padding-right: 8px;
+    padding-right: 8px;
+    box-shadow: none;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10000;
+    height: auto;
+    margin: 30px auto;*/
+
+}
+.modal-backdrop.in {
+    opacity: .5;
+}
+.category-modal-container .modal-content {
+    border: none;
+    border-radius: 0;
+    outline: 0;
+    max-width: 480px;
+    width: auto;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 24px 8px 24px 8px;
+}
+.category-modal.open{
+  display: block !important;
+}
+.category-modal .popup-header {
+    padding: 0px 16px !important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    flex: 1;
+    margin-bottom: 24px;
+    border: none;
+}
+#categories-icon {
+  cursor: pointer;
+}
+.popup-close {
+    opacity: 0.5;
+    cursor: pointer;
+    margin: -0.5rem -0.5rem -0.5rem auto;
+}
+.popup-close:hover {
+    opacity:0.75;
+}
+.category-modal .popup-header h2 {
+    margin: 0px;
+    display: inline-block;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 20px;
+    color: #292D32;
+    padding: 0;
+    text-transform: capitalize;
+    font-family: "Montserrat", sans-serif !important;
+}
+.category-row {
+    display: flex;
+    justify-content: start;
+    flex-wrap: wrap;
+    border: none;
+    padding: 0 !important;
+}
+
+.category-row .category {
+  width: 33%;
+  border-right: 1px solid #F3F3F3;
+  text-align: left;
+  padding: 0px 16px;
+  margin-bottom: 16px;
+}
+.category-row .category:nth-child(3), .category-row .category:nth-child(6), .category-row .category:last-child{
+  border-right: none;
+}
+.category-row .category .category-title {
+  color:#585858;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 14px;
+  letter-spacing: -0.14px;
+  margin-bottom: 8px;
+  text-transform: capitalize;
+}
+
+    .category-row .category .category-range {
+        color: #585858;
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 14px;
+        letter-spacing: -0.14px;
+        text-transform: capitalize;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+/*Media Css Start*/
+
+
+@media screen and (min-width:767px){
+  .pl-14{
+    padding-left: 14px !important;
+  } 
+  .pr-14{
+    padding-right: 14px !important;
+  }
+  .membershipTabs .tab-content .tab-pane .row {
+    margin-right: -14px !important;
+    margin-left: -14px !important;
+  }
+/*  .row-marger-8{
+    margin-right: -8px !important;
+    margin-left: -8px !important;
+  }*/
+}
+
+@media screen and (max-width:1024px){
+  .account-btn {
+    margin-top: 15px;
+}
+.free-account .account-benefits-list .learn-more-link {
+  font-size: 14px;
+}
+.free-account .account-benefits-list ul li {
+  margin-bottom: 15px;
+}
+.free-account {
+  padding: 20px;
+}
+}
+
+@media screen and (max-width:991px){
+  .initiatives-content h3 {
+    font-size: 15px;
+}
+.initiatives-content p {
+  font-size: 14px;
+}
+.free-account .account-benefits-list h4 {
+  margin: 20px 0px;
+}
+.free-account h3 {
+  font-size: 25px;
+  padding-bottom: 20px;
+}
+.itra-price {
+  font-size: 25px;
+}
+.free-account .account-benefits-list ul li {
+  font-size: 14px;
+  line-height: 20px;
+}
+.itra-subscription .free-account .account-benefits-list .learn-more-link {
+  margin-left: 0;
+  text-align: center;
+  display: block;
+}
+.latest-news-wrapper {
+  padding: 20px 0;
+}
+.membership-wrapper {
+  padding: 100px 0px 0px;
+}
+.homeHeroBanner h1 {
+  font-size: 45px;
+  line-height: 50px;
+}
+.homeHeroBanner p {
+  font-size: 24px;
+  line-height: 30px;
+}
+}
+
+@media screen and (max-width:767px) {
+  .homeHeroBanner {
+    padding: 80px 0px;
+  }
+  .homeHeroBanner h1 {
+    font-size: 40px;
+    line-height: 44px;
+    margin: 0px 0px 16px 0px;
+  }
+  .homeHeroBanner p {
+    font-size: 16px;
+    line-height: 24px;
+  }
+  .banner-search-container {
+    max-width: 680px;
+    margin: 40px auto 0 auto;
+  }
+  
+  .search-title {
+    font-size: 20px;
+    line-height: 24px;
+    margin-bottom: 32px;
+  }
+  .top-rankings.running-rankings {
+    margin: 60px 0px 60px 0;
+  }
+  .top-rankings.running-rankings .section-title {
+    font-size: 28px;
+    margin: 0 0 34px;
+    padding-bottom: 34px;
+  }
+  .top-rankings.running-rankings .filter-buttons {
+    margin: 26px auto 0 auto;
+  }
+  .initiatives-wrapper {
+    padding: 60px 0px 0px 0;
+  }
+  .section-title {
+    margin: 0px;
+    max-width: 353px;
+    margin: 0 auto !important;
+    padding-bottom: 40px;
+  }
+  .initiatives-content {
+    text-align: center;
+    padding-bottom: 60px;
+  }
+  .membership-wrapper {
+    padding: 60px 0px 60px 0;
+  }
+.membership-wrapper h2.section-title {
+    padding-bottom: 32px;
+    font-size: 28px !important;
+    line-height: 36px !important;
+}
+    .initiatives-wrapper .section-title {
+        font-size: 28px !important;
+        line-height: 36px !important;
+        max-width: 325px;
+    }
+    .top-rankings .section-title {
+        font-size: 28px !important;
+    }
+    .membershipTabs ul.nav.nav-pills {
+        margin-bottom: 24px;
+    }
+  .free-account {
+    padding: 32px 20px;
+    min-height: auto;
+  }
+  .free-account h3 {
+    font-size: 28px;
+    padding-bottom: 24px;
+    line-height: 28px;
+  }
+  .free-account .account-benefits-list h4 {
+    margin: 24px 0px;
+  }
+  .free-account .account-benefits-list ul li {
+    margin-bottom: 24px;
+  }
+  .free-account .account-benefits-list .learn-more-link {
+    margin-left: 40px;
+    text-align: left;
+    padding-top: 8px;
+  }
+  .itra-subscription {
+    margin-top: 40px;
+    transform: none;
+    -webkit-transform: none;
+    -moz-transform: none;
+    -ms-transform: none;
+    -o-transform: none;
+  } 
+  .itra-subscription h3 {
+    color: #FFF;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 20px;
+    margin: 0px;
+    padding: 12px 0px 16px 0;
+  }
+  .itra-subscription .free-account {
+    padding-top: 20px;
+    padding-right: 13px;
+  }
+  .itra-price {
+    font-size: 32px;
+  }
+  .itra-price-container {
+    padding-bottom: 24px;
+  }
+  .itra-price-container img {
+    width: 48px;
+  }
+  .itra-subscription .free-account .account-benefits-list .learn-more-link {
+    margin-left: 0px;
+    padding-top: 16px;
+  }
+  .account-btn {
+    margin-top: 32px;
+    max-width:100%;
+  }
+  .latest-news-wrapper {
+    padding: 60px 0;
+  }
+    .latest-news-wrapper h2.section-title {
+        padding-bottom: 2px;
+        font-size: 28px !important;
+    }
+  .latest-news span {
+    padding: 16px 0px 16px 0;
+  }
+  .learn-more-link {
+    line-height: 14px;
+    letter-spacing: -0.14px;
+  }
+  .latest-news-wrapper .loadMoreWrapper .load-more-btn {
+    margin: 40px 0 0 0;
+  }
+  
+}
+
+
+@media screen and (max-width:480px){
+  .homeHeroBanner p {
+    max-width: 308px;
+  }
+  .search-button {
+    max-width: 61px;
+}
+.search-box {
+  border-radius: 8px;
+  padding: 11px 16px;
+}
+
+.category-row .category .category-title {
+  font-size: 11px;
+  letter-spacing: -0.11px;
+}
+.category-row .category .category-range {
+  font-size: 12px;
+  letter-spacing: -0.12px;  
+}
+.popup-close img {
+  width: 25px;
+}
+.level {
+  font-size: 12px !important  ;
+}
+}
+
+
+@media (min-width: 1200px) {
+  .membership-tab{
+      width: 46.1%;
+  }
+  .row.justify-center{
+    justify-content: center;
+  }
+}

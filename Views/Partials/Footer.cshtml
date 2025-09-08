@@ -1,0 +1,112 @@
+﻿@using Umbraco.Cms.Core.Models.PublishedContent
+@using Umbraco.Cms.Core.Routing
+@using Umbraco.Extensions
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@using System.Globalization
+@using Umbraco.Cms.Core.Models
+@using Umbraco.Cms.Core.Models.Blocks
+
+@{
+	var logo = Model.Value<IPublishedContent>("footerLogo");
+}
+
+<link rel="stylesheet" href="~/css/Itra-Footer.css" />
+<link rel="stylesheet" href="~/css/spacing.css" />
+<div>
+
+ <div class="footer-main pt_60">
+  <div class="quick-link-main border-0 mt-0 mb_60">
+   <div class="container">
+	<div class="row">
+	 <div class="col-lg-4 col-md-4 border-bottom-dark">
+	  <div class="left-side">
+	   <img src="@logo.Url()" alt="footer Logo" class="img-fluid footer-logo mb_38">
+
+	  </div>
+	 </div>
+	 <div class="col-lg-3 col-md-3 col-12">
+	  <div class="righ-side right-side-top">
+	   <h6 class="text-light fw-bold">@Model.Value("footerImportantLinkText")</h6>
+	   <ul class="footerlink quick-menu list-unstyled">
+		@if(Model.Value<BlockListModel>("footerImportantLinks") is BlockListModel importantLinks)
+		{
+			foreach(var item in importantLinks)
+			{
+				var linkContent = item.Content;
+				<li class="pb-2">
+					<a href="@linkContent.Value("link")" class="text-white text-500 fw-bold" target="_blank">@linkContent.Value("linkName")</a>
+				</li>
+			}
+		}
+	   </ul>
+	  </div>
+	 </div>
+	 <div class="col-lg-3 col-md-3 col-12">
+	  <div class="righ-side">
+	   <h6 class="text-light fw-bold">@Model.Value("footerStayInTouchText")</h6>
+	   <ul class="footerlink quick-menu list-unstyled">
+		@if(Model.Value<BlockListModel>("footerStayInTouch") is BlockListModel stayInTouchLinks)
+		{
+			foreach(var item in stayInTouchLinks)
+			{
+				var linkContent = item.Content;
+				<li class="pb-2">
+					<a href="@linkContent.Value("link")" class="text-white text-500 fw-bold" target="_blank">@linkContent.Value("linkName")</a> 
+				</li>
+			}
+		}
+	   </ul>
+	  </div>
+	 </div>
+	 <div class="col-lg-2 col-md-2">
+	  <div class="righ-side">
+	   <h6 class="text-light fw-bold">@Model.Value("footerFollowUsText")</h6>
+	   <div class="social-media-icon">
+		<ul class="d-flex mb-0 list-unstyled">
+			@if(Model.Value<BlockListModel>("footerFollowUs") is BlockListModel followUs)
+			{
+				foreach(var item in followUs)
+				{
+					var linkContent = item.Content;
+					var Logo = linkContent.Value<IPublishedContent>("icon");
+					<li>
+						<a href="@linkContent.Value("url")" class="text-white" target="_blank">
+							<img src="@Logo.Url()" alt="youtube" class="img-fluid">
+						</a>
+					</li>
+				}
+			}
+		</ul>
+	   </div>
+	  </div>
+	 </div>
+	</div>
+   </div>
+  </div>
+
+
+  <div class="copywrite-section pt_24 pb_10 border-top-itra">
+   <div class="container">
+	<div class="row align-items-center">
+	 <div class="col-lg-6 col-md-6">
+	  <div class="copywrite">
+	   <p class="text-white text-400">@Model.Value("footerCopyRIghtText")</p>
+	  </div>
+
+	 </div>
+	 <div class="col-lg-6 col-md-6">
+
+	  <ul class="d-flex mb-0 list-unstyled justify-content-center justify-content-md-end">
+	   <li>
+		<a href="/Info/PrivacyPolicy" class="text-white text-400">@Model.Value("footerPolicyText")</a>
+	   </li>
+	   <li>
+		<a href="/INFO/GeneralConditions" class="text-white text-400">@Model.Value("footerTermsConditionText")</a>
+	   </li>
+	  </ul>
+	 </div>
+	</div>
+   </div>
+  </div>
+ </div>
+</div>

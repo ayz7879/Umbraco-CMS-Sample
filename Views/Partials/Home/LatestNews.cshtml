@@ -1,0 +1,84 @@
+﻿@using Umbraco.Extensions
+@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Home>
+@using Umbraco.Cms.Core.Models.Blocks
+
+@{
+    var articlesPage = Model.Root().Descendants()
+        .FirstOrDefault(x => x.ContentType.Alias == "articlePage");
+
+    var homeArticles = new List<IPublishedContent>();
+        
+    if (articlesPage != null)
+    {
+        var allArticles = articlesPage.Value<IEnumerable<IPublishedContent>>("article");
+        homeArticles = allArticles?.Take(3).ToList() ?? new List<IPublishedContent>();
+    }
+}
+
+<section class="latest-news-wrapper">
+    <div class="container-md-custom">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="section-title">@Model.Value("articleHeading")</h2>
+            </div>
+        </div>
+        <div class="row row-marger-8" id="latest-news-container">
+
+            @if (homeArticles.Any())
+            {
+                foreach (var article in homeArticles)
+                {
+                    var articleImage = article.Value<IPublishedContent>("articleImage");
+                    var title = article.Value<string>("title");
+                    var description = article.Value<string>("description");
+                    var date = article.Value<DateTime?>("date");
+                    var articleUrl = article.Url();
+                    
+                    // Truncate description to 150 characters
+                    var truncatedDescription = !string.IsNullOrEmpty(description) && description.Length > 150 
+                        ? description.Substring(0, 150) + "..." 
+                        : description;
+                    
+                    <div class="col-lg-4 col-md-6 padder-right-8 padder-left-8">
+                        <div class="latest-news mt-30" onclick="window.open('@articleUrl', '_blank')" style="cursor:pointer;">
+                            <div class="news-img-container">
+                                @if (articleImage != null)
+                                {
+                                    <img src="@articleImage.Url()" onerror="this.onerror=null; this.src='/assets/images/default.jpg';" alt="@title">
+                                }
+                                else
+                                {
+                                    <img src="/assets/images/default.jpg" alt="@title">
+                                }
+                            </div>
+                            
+                            @if (date.HasValue)
+                            {
+                                <span>@date.Value.ToString("MMM dd, yyyy")</span>
+                            }
+                            else
+                            {
+                                <span>@article.CreateDate.ToString("MMM dd, yyyy")</span>
+                            }
+                            
+                            <h3>@title</h3>
+                            <p>@truncatedDescription</p>
+                            <a href="@articleUrl" class="learn-more-link" target="_blank">@Model.Value("articleReadMore")</a>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="col-12">
+                    <p class="text-center">No articles available at the moment.</p>
+                </div>
+            }
+        </div>
+        
+        <div class="loadMoreWrapper">
+            <a href="@(articlesPage?.Url() ?? "/news")" target="_blank" class="load-more-btn">@Model.Value("articleViewAll")</a>
+        </div>
+    </div>
+</section>

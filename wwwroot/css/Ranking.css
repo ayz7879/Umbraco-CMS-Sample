@@ -1,0 +1,2506 @@
+/* Base styles */
+:root {
+    --primary-color: #a8d36a;
+    --dark-bg: #292d32;
+    --text-dark: #292d32;
+    --text-light: #fff;
+    --border-color: #e3e3e3;
+    --elite-badge: #c94f56;
+}
+a{
+    text-decoration: none;
+}
+
+body {
+    margin: 0;
+    font-family: Montserrat, -apple-system, Roboto, Helvetica, sans-serif;
+    line-height: 1;
+    color: var(--text-dark);
+}
+.form-control:disabled, .form-control[readonly] {
+    cursor: not-allowed;
+}
+.runner-inner-wrapper {
+    position: relative;
+    max-width: 1155px;
+    margin: 0 auto;
+}
+
+.runner-inner-wrapper .load {
+    height: 100%;
+    width: 100%;
+    left: 0;
+    background: #0000006b;
+    bottom: 0;
+}
+
+.top-banner {
+    height: 320px;
+    background-repeat: no-repeat;
+    width: 100%;
+    background-size: cover;
+}
+
+.top-banner .title {
+    color: #FFF;
+    text-align: center;
+    leading-trim: both;
+    text-edge: cap;
+    font-size: 56px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 60px;
+    margin-top: 124px;
+}
+
+.btn-subscribe, .btn-signin {
+    border-radius: 30px;
+    padding: 12px 20px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-subscribe {
+    background: transparent;
+    border: 1px solid #585858;
+    color: var(--text-light);
+}
+
+.btn-signin {
+    background-color: var(--primary-color);
+    border: none;
+    color: var(--dark-bg);
+}
+
+.language-selector {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.language-icon {
+    width: 28px;
+}
+/* Top Rankings section */
+.top-rankings {
+    background-color: #fff;
+    width: 100%;
+}
+
+.top-rankings-container {
+    max-width: 1180px;
+    margin: 0px auto;
+    position: relative;
+    padding: 80px 20px;
+}
+
+.top-rankings .section-title {
+    font-size: 32px;
+    line-height: 36px;
+    margin: 0 0 24px;
+    padding-bottom: 0;
+}
+
+.category-filter {
+    text-align: center;
+}
+
+.filter-header {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.modal-info-icon {
+    cursor: pointer;
+}
+
+.filter-buttons {
+    display: flex;
+    border: 1px solid #f3f3f3;
+    border-radius: 4px;
+    flex-wrap: wrap;
+    max-width: 1005px;
+    margin: 16px auto 0 auto;
+    padding: 4px;
+}
+
+.filter-buttons.gender-filter {
+    border-radius: 4px;
+    border: 1px solid #EFEFEF;
+    background: #FFF;
+    max-width: 276px;
+}
+
+.filter-dropdowns {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 32px;
+    margin-top: 32px;
+}
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1px solid #b5b5b5;
+    background: none;
+    font-size: 16px;
+    color: #292d32;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+}
+
+.dropdown-button:hover {
+    border-color: #a8d36a;
+}
+
+.dropdown-button[aria-expanded="true"] {
+    border-color: #a8d36a;
+    background-color: rgba(168, 211, 106, 0.1);
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 200px;
+    background: white;
+    border-radius: 8px;
+    border: 1px solid #e6e6e6;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: none;
+    z-index: 1000;
+    padding: 8px 0;
+    margin-top: 4px;
+    list-style: none;
+}
+
+.dropdown-button[aria-expanded="true"] + .dropdown-menu {
+    display: block;
+}
+
+.dropdown-menu li {
+    margin: 0;
+    padding: 0;
+}
+
+.dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 8px 16px;
+    border: none;
+    background: none;
+    font-size: 14px;
+    color: #292d32;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.dropdown-item:hover {
+    background-color: rgba(168, 211, 106, 0.1);
+}
+
+.filter-btn {
+    padding: 12px 24px;
+    border: none;
+    background: none;
+    color: #585858;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 16px;
+    font-style: normal;
+    line-height: 16px;
+    /* 100% */
+}
+
+.filter-btn.active {
+    background-color: var(--primary-color);
+    color: var(--text-dark);
+}
+/* Rankings cards */
+.rankings-grid {
+    display: flex;
+    gap: 24px;
+    margin-top: 30px;
+}
+
+.rankings-card {
+    flex: 1;
+    background: var(--text-light);
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.12);
+}
+
+.card-title {
+    color: #000;
+    font-size: 16px;
+    line-height: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin: 0;
+    padding-bottom: 0;
+    font-family: "Montserrat", sans-serif;
+}
+
+.card-divider {
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    margin: 24px 0;
+    background-color: transparent;
+}
+
+.ranking-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    /* margin-bottom: 24px;
+     */
+}
+
+.runner-initials {
+    width: 100%;
+    height: 100%;
+    background-color: #A8D36A;
+    color: #fff;
+    font-size: 24px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+    color: #000;
+}
+
+.runner-photo-container {
+    position: relative;
+    width: 80px;
+    height: 80px;
+}
+
+.rankings-list a {
+    color: #292D32;
+}
+
+.rank {
+    color: #000;
+    text-align: center;
+    font-size: 32px;
+    font-style: italic;
+    font-weight: 700;
+    line-height: 32px;
+    letter-spacing: -0.32px;
+    width: 15px;
+}
+
+.runner-info {
+    display: flex;
+    gap: 16px;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1;
+}
+
+.runner-photo {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    border-radius: 50%
+}
+
+#topMenContainer .runner-photo, #topWomenContainer .runner-photo {
+    object-fit: cover;
+}
+
+.runner-name {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0 0 9px;
+    line-height: 18px;
+}
+
+.runner-country {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.rankings-list:not(:last-child)::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 1px;
+    background-image: url('../images/dotted-line.png');
+    margin-top: 24px;
+    margin-bottom: 24px;
+}
+
+.rank-profile {
+    display: flex;
+    align-items: center;
+    column-gap: 24px;
+}
+
+.country-flag {
+    width: 20px;
+    border-radius: 50%;
+    outline: 2px solid #282C35;
+}
+
+.score-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 8px;
+    border-radius: 4px;
+    color: var(--text-light);
+    text-align: center;
+    min-width: 106px;
+}
+@media screen and (min-width:991px) {
+    .ranking-item .score-badge {
+        min-width: 120px;
+    }
+}
+
+.score-badge span.score-label {
+    font-size: 14px;
+    line-height: 14px;
+    font-weight: 500;
+    letter-spacing: -0.14px;
+}
+
+.score-badge.elite {
+    background-color: var(--elite-badge);
+}
+
+.score {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.score-divider {
+    width: 1px;
+    height: 18px;
+    background: var(--text-light);
+}
+
+.score-badge .level {
+    font-size: 14px;
+    font-weight: 500;
+}
+/* Full rankings section */
+#RunnerRankingTable_wrapper {
+    max-width: 1155px;
+    margin: 0 auto;
+}
+
+.full-rankings {
+    background: #f9f9f9;
+    border-top: 1px solid var(--border-color);
+    padding: 80px 80px 40px 80px;
+}
+
+.full-rankings h2.section-title {
+    padding-bottom: 32px;
+    font-size: 32px;
+}
+
+#runner-ranking-container {
+    text-align: center;
+}
+
+.ranking-filter-buttons {
+    display: inline-flex;
+    padding: 4px;
+    border-radius: 4px !important;
+    border: 1px solid #EFEFEF;
+    background: #FFF;
+    margin-bottom: 32px;
+}
+
+    .ranking-filter-buttons button.btn {
+        border: none;
+        padding: 12px 24px;
+        color: #585858;
+        font-family: Montserrat;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 16px;
+        width: 111px;
+        border-radius: 4px !important;
+    }
+
+.ranking-filter-buttons button.btn.btn-success {
+    border-radius: 4px;
+    background-color: #A8D36A;
+    border: none;
+    color: #1b1b1b;
+    font-weight: 600;
+}
+
+.ranking-filter-buttons .btn-outline-secondary:hover {
+    color: #1b1b1b;
+    background-color: #f9f9f9;
+    border-color: #f9f9f9;
+}
+
+.ranking-filter-buttons button.btn.btn-success:focus, .ranking-filter-buttons button.btn:focus {
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+.ranking-category-filter {
+    /* display: flex;
+     max-width: 637px;
+     margin: 0 auto;
+     gap: 16px;
+     justify-content: center;
+     align-items: center;
+     margin-bottom: 32px;
+    */
+}
+
+.ranking-modal-header {
+    display: none;
+}
+
+.ranking-modal-footer {
+    display: none;
+}
+
+.ranking-modal-body {
+    display: flex;
+    max-width: max-content;
+    margin: 0 auto;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+.ranking-category-filter fieldset {
+/*    width: 100%;*/
+    min-width: auto;
+}
+
+.ranking-category-filter fieldset select {
+    padding: 4px 16px;
+    border-radius: 8px;
+    border: 1px solid #B5B5B5;
+    min-height: 32px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 16px;
+    letter-spacing: -0.32px;
+    width: max-content;
+    font-family: "Montserrat", sans-serif;
+    appearance: none; /* For most browsers */
+    -webkit-appearance: none; /* Safari */
+    -moz-appearance: none; /* Firefox */
+    background: url('../images/arrow-down-dark.svg') no-repeat right 1rem center;
+    background-size: 1rem;
+    padding-right: 2.5rem; /* Space for custom arrow */
+}
+
+.ranking-category-filter fieldset:first-child select {
+    width: 171px !important;
+}
+
+.ranking-category-filter fieldset:nth-child(2) select {
+    width: 147px !important;
+}
+.ranking-category-filter fieldset:nth-child(3) select {
+    width:160px !important;
+}
+
+#RunnerRankingTable thead {
+    border-bottom: 1px solid #E5E1E1;
+    background: #FFF;
+}
+
+    #RunnerRankingTable thead tr th {
+        padding: 16px 0px !important;
+        color: #585858;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 16px;
+        border-color: #E3E3E3;
+        letter-spacing: -0.14px;
+        text-align: left;
+        background-color: #fff !important;
+        vertical-align: text-top;
+        font-family: "Montserrat", sans-serif;
+    }
+
+    #RunnerRankingTable thead tr th img {
+        cursor: pointer;
+    }
+
+#RunnerRankingTable {
+    border: 1px solid #E3E3E3;
+    border-radius: 8px;
+}
+
+#RunnerRankingTable.table > :not(caption) > * > * {
+    padding: 0.5rem 0.5rem;
+    background-color: transparent;
+    border-bottom-width: 1px;
+    box-shadow: none;
+}
+
+#RunnerRankingTable tbody tr td {
+    padding: 16px 0px !important;
+    color: #292D32;
+    background-color: #fff !important;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 14px;
+    letter-spacing: -0.14px;
+    vertical-align: middle;
+    text-align: left;
+    font-family: "Montserrat", sans-serif;
+}
+
+#RunnerRankingTable thead tr:first-child th:first-child {
+    border-top-left-radius: 8px;
+}
+
+#RunnerRankingTable thead tr:first-child th:last-child {
+    border-top-right-radius: 8px;
+}
+
+#RunnerRankingTable_wrapper .dt-column-header span.dt-column-title img#PerformanceIndexId {
+    width: 16px;
+}
+
+#RunnerRankingTable tbody tr:last-child td:first-child {
+    border-bottom-left-radius: 8px;
+}
+
+#RunnerRankingTable tbody tr:last-child td:last-child {
+    border-bottom-right-radius: 8px;
+}
+
+#RunnerRankingTable_wrapper.dt-container .dataTable tbody tr td:first-child {
+    padding-left: 30px !important;
+    width: 100px !important;
+    font-size: 16px;
+    line-height: 16px;
+}
+
+#RunnerRankingTable_wrapper.dt-container .dataTable tr th:first-child {
+    padding-left: 24px !important;
+    width: 104px !important;
+}
+
+#RunnerRankingTable_wrapper.dt-container .dataTable tr th:nth-child(2) {
+    width: 312px !important;
+}
+
+#RunnerRankingTable_wrapper.dt-container .dataTable tbody tr td:nth-child(2) {
+    width: 312px !important;
+}
+
+#RunnerRankingTable_wrapper.dt-container .dataTable tr th:nth-child(3) {
+    width: 202px !important;
+}
+
+#RunnerRankingTable_wrapper.dt-container .dataTable tbody tr td:nth-child(3) {
+    width: 202px !important;
+}
+
+#RunnerRankingTable_wrapper.dt-container .dataTable tr th:nth-child(4) {
+    width: 145px !important;
+}
+
+#RunnerRankingTable_wrapper.dt-container .dataTable tbody tr td:nth-child(4) {
+    width: 145px !important;
+}
+
+#RunnerRankingTable_wrapper.dt-container .dataTable tr th:nth-child(5) {
+    width: 138px !important;
+}
+
+#RunnerRankingTable_wrapper.dt-container .dataTable tbody tr td:nth-child(5) {
+    width: 138px !important;
+}
+
+#RunnerRankingTable_wrapper.dt-container .dataTable tr th:last-child {
+    width: 190px !important;
+}
+
+#RunnerRankingTable_wrapper.dt-container .dataTable tbody tr td:last-child {
+    width: 190px !important;
+}
+
+.dataTables_wrapper #RunnerRankingTable_paginate.dataTables_paginate .paginate_button {
+    padding: 0;
+}
+
+div#RunnerRankingTable_paginate .page-item .page-link {
+    border-radius: 8px;
+    border: 1px solid #EDEDED;
+    background: #FFF;
+    padding: 8px 12px;
+    color: #313131;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    letter-spacing: -0.1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Montserrat", sans-serif;
+}
+
+#RunnerRankingTable tbody tr td:nth-child(2) {
+    font-size: 16px;
+    line-height: 10px;
+    letter-spacing: normal;
+}
+
+#RunnerRankingTable.dataTable tbody tr.odd {
+    background: #fff !important;
+    opacity: 1;
+    --bs-table-accent-bg: none;
+}
+
+#RunnerRankingTable.dataTable tbody tr:hover td {
+    background: rgba(168, 211, 106, 0.08) !important;
+}
+
+#RunnerRankingTable.table-hover > tbody > tr:hover {
+    --bs-table-accent-bg: none;
+    color: inherit;
+}
+
+#RunnerRankingTable tbody tr td img {
+    border-radius: 100%;
+    width: 40px;
+    height: 40px;
+}
+
+    #RunnerRankingTable tbody tr td img.flag-img {
+        width: 27px;
+        height: 27px;
+        vertical-align: middle;
+        outline: 2px solid #282C35;
+    }
+
+span.country-flag-wrap {
+    display: inline-block;
+    width: 17%;
+    padding-right: 8px;
+}
+
+#RunnerRankingTable tbody tr td p {
+    width: 57%;
+    display: inline-block;
+    margin: 0;
+    line-height: normal;
+    vertical-align: middle;
+}
+
+#RunnerRankingTable_wrapper.dt-container .dataTable tbody tr td {
+    border-bottom-color: #E6E6E6;
+    padding: 16px 16px;
+}
+
+.profile-container .rankers-name {
+    max-width: 100%;
+/*    word-wrap: break-word;*/
+    line-height: 16px;
+}
+
+td.PiIndex-column .score-badge {
+    font-size: 16px;
+    line-height: 16px;
+    max-width: fit-content;
+}
+
+.score-badge.Elite-1 {
+    background-color: #BC4A51;
+}
+
+.score-badge.Elite-2 {
+    background-color: #C94F56;
+}
+
+.score-badge.Elite-3 {
+    background-color: #E25961;
+}
+
+.score-badge.Elite-4 {
+    background-color: #FB636C;
+}
+
+.score-badge.Expert-1 {
+    background-color: #BF8754;
+    color: #292D32;
+}
+
+.score-badge.Expert-2 {
+    background-color: #CC905A;
+    color: #292D32;
+}
+
+.score-badge.Expert-3 {
+    background-color: #E6A265;
+    color: #292D32;
+}
+
+.score-badge.Expert-4 {
+    background-color: #FFB470;
+    color: #292D32;
+}
+
+.score-badge.Advanced-1 {
+    background-color: #BFB056;
+    color: #292D32;
+}
+
+.score-badge.Advanced-2 {
+    background-color: #CCBB5B;
+    color: #292D32;
+}
+
+.score-badge.Advanced-3 {
+    background-color: #E6D367;
+    color: #292D32;
+}
+
+.score-badge.Advanced-4 {
+    background-color: #FFEA72;
+    color: #292D32;
+}
+
+.score-badge.Intermediate-1 {
+    background-color: #489166;
+}
+
+.score-badge.Intermediate-2 {
+    background-color: #4FA371;
+}
+
+.score-badge.Intermediate-3 {
+    background-color: #5AB780;
+}
+
+.score-badge.Intermediate-4 {
+    background-color: #64C88D;
+}
+
+.score-badge.Novice {
+    background-color: #3A7452;
+    color: #fff;
+}
+
+#RunnerRankingTable_wrapper nav[aria-label="pagination"] {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+#RunnerRankingTable_wrapper .dt-paging-button {
+    border-radius: 8px !important;
+    border: 1px solid #EDEDED;
+    background-color: #fff !important;
+    color: #313131 !important;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    letter-spacing: -0.1px;
+    min-height: 32px;
+    padding: 4px 12px;
+    min-width: 70px;
+    display: flex;
+    align-items: anchor-center;
+    gap: 8px;
+    font-family: "Montserrat", sans-serif;
+}
+
+#RunnerRankingTable_wrapper .dt-paging-button:hover {
+    background: #A8D36A !important;
+    color: #313131 !important;
+    box-shadow: none;
+}
+
+#RunnerRankingTable_wrapper .dt-paging-button.disabled.next, #RunnerRankingTable_wrapper button.dt-paging-button.disabled.previous {
+    opacity: 0.5;
+}
+
+#RunnerRankingTable_wrapper .dt-paging-button.disabled:hover, #RunnerRankingTable_wrapper button.dt-paging-button.disabled:hover {
+    background-color: transparent !important;
+}
+
+#RunnerRankingTable_wrapper .dt-paging {
+    margin-top: 40px;
+    margin-bottom: 0px;
+}
+
+.runner-inner-wrapper.Disabled .dt-paging {
+    display: none;
+}
+
+#RunnerRankingTable_wrapper.dt-container div.dt-layout-row {
+    margin: 0;
+}
+
+.ranking-mob-filter {
+    padding: 12px 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    border-radius: 8px;
+    border: 1px solid #EFEFEF;
+    background: #FFF;
+    max-width: 353px;
+    margin: 0 auto auto;
+    cursor: pointer;
+    display: none;
+    margin-bottom: 16px;
+}
+
+.ranking-mob-filter .filter-title {
+    color: #292D32;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 16px;
+    /* 100% */
+    letter-spacing: -0.32px;
+    font-family: "Montserrat", sans-serif;
+}
+
+.category-labels {
+    color: rgba(41, 45, 50, 0.80);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 14px;
+    /* 100% */
+    letter-spacing: -0.28px;
+    margin-bottom: 8px;
+    font-family: "Montserrat", sans-serif;
+    display: none;
+}
+
+#RunnerRankingTable.dataTable.dtr-inline.collapsed > tbody > tr > td.dtr-control:before, #RunnerRankingTabl.dataTable.dtr-inline.collapsed > tbody > tr > th.dtr-control:before {
+    margin-right: 0.5em;
+    border-top: none !important;
+    border-left: none !important;
+    border-bottom: none !important;
+    border-right: none !important;
+    width: 24px;
+    height: 24px;
+    background-image: url(../images/arrow-square-down.svg);
+    background-repeat: no-repeat;
+    position: absolute;
+    left: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+}
+
+#RunnerRankingTable.dataTable.dtr-inline.collapsed > tbody > tr.dtr-expanded > td.dtr-control:before, #RunnerRankingTabl.dataTable.dtr-inline.collapsed > tbody > tr.dtr-expanded > th.dtr-control:before {
+    border-top: none !important;
+    border-left: none !important;
+    border-bottom: none !important;
+    border-right: none !important;
+    width: 24px;
+    height: 24px;
+    background-image: url(../images/arrow-square-up.svg);
+    background-repeat: no-repeat;
+    position: absolute;
+    left: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+}
+/* -- CTA section -- */
+.cta-section {
+    background: #162402;
+    border-radius: 12px;
+    padding: 40px 80px;
+    margin: 80px auto;
+    color: var(--text-light);
+}
+
+.cta-content {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.cta-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.cta-description {
+    font-size: 16px;
+    font-weight: 500;
+    color: #e8e8e8;
+    line-height: 20px;
+    margin: 0;
+}
+
+.cta-button {
+    background: var(--primary-color);
+    color: var(--text-dark);
+    border: none;
+    border-radius: 8px;
+    padding: 16px 24px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+}
+/* -- Footer styles -- */
+.main-footer {
+    background: var(--dark-bg);
+    padding: 60px 0 24px;
+    color: var(--text-light);
+}
+
+.footer-content {
+    max-width: 1130px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 100px;
+}
+
+.footer-logo img {
+    width: 241px;
+}
+
+.footer-nav {
+    display: flex;
+    gap: 100px;
+}
+
+.footer-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 16px;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li {
+    margin-top: 16px;
+}
+
+.footer-links a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.social-links {
+    display: flex;
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.social-links img {
+    width: 24px;
+}
+
+.legal-links {
+    display: flex;
+    gap: 40px;
+}
+
+.legal-links a {
+    color: var(--text-light);
+    text-decoration: none;
+}
+
+.runner-cta {
+    width: 100%;
+    max-width: 1140px;
+  /*  height: 144px;*/
+    border-radius: 12px;
+    position: relative;
+    margin: 0 auto;
+    overflow: hidden;
+    background-color: #162402;
+    margin-top: 80px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.visible {
+    display: flex !important;
+}
+
+.runner-cta-content {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 40px 38px 40px 80px;
+    z-index: 1;
+}
+
+.runner-cta-title {
+    color: #fff;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 32px;
+    letter-spacing: -0.451px;
+    width: 183px;
+    margin: 0;
+    margin-right: 180px;
+    padding: 0px;
+    font-family: "Montserrat", sans-serif;
+}
+
+.runner-cta-description {
+    color: #e8e8e8;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: -0.288px;
+    width: 344px;
+    margin: 0;
+    margin-right: 186px;
+    font-family: "Montserrat", sans-serif;
+}
+
+.runner-cta-button {
+    padding: 16px 24px;
+    border-radius: 8px;
+    color: #1b1b1b;
+    text-align: center;
+    font-family: "Montserrat", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 16px;
+    cursor: pointer;
+    background-color: #a8d36a;
+    border: none;
+    width: 100%;
+    max-width: 170px;
+}
+    .runner-cta-button:hover {
+        color: #1b1b1b;
+    }
+    .background-wrapper {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+.background-circle {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-61.217deg);
+    -webkit-transform: rotate(-61.217deg);
+    -moz-transform: rotate(-61.217deg);
+    -ms-transform: rotate(-61.217deg);
+    -o-transform: rotate(-61.217deg);
+    opacity: 0.2;
+}
+/*--Login Modal Css Start--*/
+.login-upgrade-overlay {
+    background: rgba(255, 255, 255, 0.60);
+    backdrop-filter: blur(15px);
+    position: absolute;
+    padding: 20px 28px 28px 28px;
+    left: 0;
+    right: 0;
+    bottom: 0px;
+    border-radius: 0px 0px 8px 8px;
+    border: 1px solid #E4E4E4;
+    border-width: 0 1px 1px 1px;
+}
+
+.login-upgrade-overlay .upgrade-subscription {
+    position: initial;
+    margin: 0px auto;
+}
+
+.login-upgrade-overlay.fr, .login-upgrade-overlay.es {
+    padding-top: 10px;
+}
+
+.login-upgrade-overlay.fr .upgrade-subscription.login-upgrade.loginborder, .login-upgrade-overlay.es .upgrade-subscription.login-upgrade.loginborder {
+    padding-top: 20px;
+}
+#login-free-Modal .modal-content .modal-body fieldset .field-validation-error {
+    padding-bottom: 10px;
+    display: block;
+    font-size: 13px;
+}
+/*--Login modal--*/
+
+@media (min-width: 576px) {
+    #login-free-Modal .modal-dialog {
+        max-width: 480px;
+    }
+}
+
+#login-free-Modal {
+    z-index: 10000;
+}
+
+#login-free-Modal .modal-content {
+    padding: 40px 32px;
+    border-radius: 8px;
+    box-shadow: none;
+    position: relative;
+    background: linear-gradient(204deg, #FFE2AB -13.54%, #FFF0D3 -10.42%, #FFF 56.2%);
+}
+
+#login-free-Modal .modal-content .btn-close {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 13.4px;
+    opacity:1 !important;
+    background: transparent url(../images/x-close.svg) !important;
+}
+#login-free-Modal .text-danger.validation-summary-valid ul {
+    margin: 0px;
+}
+#login-free-Modal .modal-content .btn-close:focus {
+    outline:none;
+}
+#login-free-Modal .modal-content .modal-body {
+    padding: 0px;
+}
+
+#login-free-Modal .modal-content .modal-body h5 {
+    color: #292D32;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 24px;
+    padding: 16px 0px 32px 0px;
+    margin: 0;
+    font-family: "Montserrat", sans-serif;
+}
+
+#login-free-Modal .modal-content .modal-body fieldset {
+    text-align: left;
+    margin-bottom: 24px;
+}
+
+#login-free-Modal .modal-content .modal-body fieldset label {
+    color: #292D32;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 16px;
+    margin-bottom: 16px;
+    box-shadow: none;
+    font-family: "Montserrat", sans-serif;
+}
+
+#login-free-Modal .modal-content .modal-body fieldset input {
+    padding: 14px 16px;
+    border-radius: 12px;
+    color: #000000;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 16px;
+    border: 1px solid #F3F3F3;
+    background: #F3F3F3;
+    min-height: 44px;
+    box-shadow: none;
+    font-family: "Montserrat", sans-serif;
+}
+
+.forgot-link {
+    width: 100%;
+    display: block;
+    color: #585858;
+    text-align: right;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 16px;
+    margin-top: 9px;
+    margin: 8px 0px 0px 0;
+    border: none;
+    text-decoration-line: underline;
+    font-family: "Montserrat", sans-serif;
+}
+
+.sign-in-btn {
+    width: 100%;
+    border: none;
+    color: #292D32;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 16px;
+    display: inline-block;
+    padding: 16px 24px;
+    margin: 8px 0px 32px 0;
+    border-radius: 12px;
+    background: #9D9D9D;
+    font-family: "Montserrat", sans-serif;
+}
+    .sign-in-btn:hover {
+        background: #A8D36A;
+    }
+    .modal-footer-links {
+    color: #585858;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 16px;
+    margin: 0px;
+    font-family: "Montserrat", sans-serif;
+}
+
+.modal-footer-links a {
+    color: #585858;
+    text-decoration: underline;
+    padding: 0px;
+    line-height: 16px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.forgot-link:hover, .modal-footer-links a:hover {
+    color: #A8D36A;
+}
+.resetFilters {
+    color: #000;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 16px;
+    letter-spacing: -0.16px;
+    display: flex;
+    padding: 7.12px 20px 7.12px 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    border-radius: 8px;
+    border: none;
+    background-color: transparent;
+    font-family: "Montserrat", sans-serif;
+    width: max-content;
+    text-decoration-line: underline;
+}
+    .resetFilters:hover {
+        color: #A8D36A;
+    }
+    .resetFilters.form-control:disabled:hover {
+        color: #000;
+    }
+    .resetFilters.form-control:disabled, .resetFilters.form-control[readonly] {
+        background-color: transparent;
+    }
+#emailError, span#passwordError {
+    padding-top: 6px;
+    width: 100%;
+    display: block;
+    font-size: 13px;
+}
+    /* ---Responsive styles Start---*/
+@media screen and (max-width:1240px) {
+    .resetFilters {
+        font-size: 12px;
+        padding: 7.12px 0px 7.12px 0px;
+    }
+    .ranking-category-filter fieldset:nth-child(2) select {
+        width: 137px !important;
+    }
+    .ranking-category-filter fieldset:first-child select {
+        width: 147px !important;
+    }
+    .runner-cta-content {
+        padding: 40px 30px 40px 30px;
+    }
+    .runner-cta-title {
+        width: 380px;
+        margin-right: 74px;
+    }
+
+    .runner-cta-description {
+        width: 344px;
+        margin-right: 80px;
+    }
+}
+    @media screen and (min-width:1025px) {
+        #RunnerRankingTable thead tr th {
+            padding: 16px 10px !important;
+            font-size: 14px !important;
+            vertical-align: text-top;
+        }
+
+        #RunnerRankingTable tbody tr td {
+            padding: 16px 10px !important;
+        }
+
+            #RunnerRankingTable tbody tr td:nth-child(2) {
+                font-size: 14px !important;
+            }
+
+        #RunnerRankingTable .profile-container .initials {
+            font-size: 13px !important;
+        }
+
+    }
+
+    @media screen and (max-width:1024px) {
+
+        #RunnerRankingTable thead tr th {
+            padding: 16px 10px !important;
+            font-size: 12px;
+        }
+
+        #RunnerRankingTable tbody tr td {
+            padding: 16px 10px !important;
+            font-size: 12px;
+        }
+
+            #RunnerRankingTable tbody tr td:nth-child(2) {
+                font-size: 12px;
+                line-height: 16px;
+                letter-spacing: normal;
+            }
+
+        span.dt-column-title img {
+            width: 16px;
+        }
+
+        .profile-container span.initials {
+            font-size: 12px !important;
+        }
+
+        #RunnerRankingTable tbody tr td img.flag-img {
+            width: 25px;
+            height: 25px;
+        }
+
+        span.country-flag-wrap {
+            width: 29%;
+        }
+
+        .filter-btn {
+            padding: 12px 22px;
+        }
+
+        .filter-buttons {
+            align-items: center;
+        }
+
+        .ranking-category-filter fieldset select {
+            font-size: 13px;
+        }
+
+    }
+
+    @media screen and (max-width: 991px) {
+        .top-header {
+            padding: 20px;
+        }
+
+        .main-nav {
+            padding: 28px 20px;
+        }
+
+        .hero-section {
+            padding: 100px 20px 110px;
+        }
+
+        .hero-title {
+            font-size: 40px;
+        }
+
+        .full-rankings {
+            padding: 60px 20px
+        }
+
+        .top-rankings-container {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            font-size: 28px;
+            line-height: 36px;
+        }
+
+        .filter-buttons {
+            margin: 20px auto 0 auto;
+            overflow-x: auto;
+            flex-wrap: nowrap;
+            text-wrap: nowrap;
+        }
+
+        .rankings-grid {
+            margin-top: 40px
+        }
+
+        .rankings-grid {
+            flex-direction: column;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        .cta-section {
+            padding: 40px 20px;
+            margin: 40px auto;
+        }
+
+        .cta-content {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        #RunnerRankingTable thead tr th {
+            padding: 16px 10px !important;
+            font-size: 12px;
+        }
+
+        .profile-container span.initials {
+            font-size: 10px !important;
+            width: 30px !important;
+            height: 30px !important;
+            line-height: 30px !important;
+        }
+
+        #RunnerRankingTable tbody tr td img {
+            border-radius: 100%;
+            width: 30px;
+            height: 30px;
+        }
+
+        .profile-container span.rankers-name {
+            width: 70%;
+        }
+
+        #RunnerRankingTable tbody tr td img.flag-img {
+            width: 20px;
+            height: 20px;
+        }
+
+        #RunnerRankingTable tbody tr td {
+            padding: 16px 10px !important;
+        }
+
+            #RunnerRankingTable tbody tr td p {
+                width: 71%;
+            }
+
+        span.country-flag-wrap {
+            width: 23%;
+        }
+
+        td.PiIndex-column .score-badge {
+            font-size: 13px;
+            line-height: 13px;
+            max-width: fit-content;
+            min-width: 101px;
+        }
+
+        .score-badge span.score-label {
+            font-size: 12px;
+        }
+
+        .ranking-mob-filter {
+            display: flex;
+        }
+
+        .ranking-category-filter-container {
+            display: none;
+        }
+
+            .ranking-category-filter-container.show-category {
+                position: fixed;
+                top: 0;
+                left: 0;
+                z-index: 1000;
+                overflow-y: auto;
+                display: block;
+                height: 100%;
+                width: 100%;
+            }
+
+                .ranking-category-filter-container.show-category .ranking-category-filter {
+                    display: flex;
+                    flex-direction: column;
+                    background-color: #fff;
+                    border-radius: 12px;
+                    max-width: 300px;
+                    width: 100%;
+                    margin: 50px auto;
+                    border: 1px solid #E6E6E6;
+                    gap: 0;
+                }
+
+        .category-labels {
+            display: block;
+            text-align: left;
+        }
+
+        .ranking-category-filter .ranking-modal-body fieldset select {
+            font-size: 14px;
+            line-height: 16px;
+            letter-spacing: -0.28px;
+            width: 100% !important;
+            padding: 10.2px 16px;
+            border: 1px solid rgba(41, 45, 50, 0.20);
+        }
+
+        .resetFilters {
+            padding: 12px 20px 12px 16px;
+            width: 100%;
+            margin-top: 8px;
+            font-size:16px;
+        }
+
+        .ranking-category-filter fieldset:first-child select {
+            width: 100% !important;
+        }
+
+        .ranking-category-filter fieldset:nth-child(2) select {
+            width: 100% !important;
+        }
+
+        .ranking-modal-body {
+            padding: 20px 20px 10px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            max-width: 100%;
+            margin: 0;
+        }
+
+        .ranking-modal-header {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            border-bottom: 1px solid #F3F3F3;
+        }
+
+            .ranking-modal-header h3 {
+                color: #292D32;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: 16px;
+                /* 100% */
+                letter-spacing: -0.32px;
+                padding: 0;
+                font-family: "Montserrat", sans-serif;
+            }
+
+        .ranking-modal-footer {
+            width: 100%;
+            padding: 0 20px 20px 20px;
+            display: block;
+        }
+
+            .ranking-modal-footer button {
+                color: #1B1B1B;
+                text-align: center;
+                font-size: 14px;
+                font-weight: 600;
+                line-height: 16px;
+                /* 114.286% */
+                border-radius: 8px;
+                background: #A8D36A;
+                width: 100%;
+                padding: 12px 24px;
+                border: none;
+                font-family: "Montserrat", sans-serif;
+            }
+
+
+        .ranking-modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            width: 100vw;
+            height: 100vh;
+            background-color: #000;
+            opacity: 0;
+            display: none;
+        }
+
+            .ranking-modal-backdrop.show {
+                display: block;
+                opacity: 0.5;
+            }
+
+        .category-labels-container {
+            width: 100%;
+        }
+    }
+
+    @media screen and (max-width: 991px) {
+        .runner-cta {
+            height: auto;
+            padding: 24px;
+        }
+
+        .runner-cta-content {
+            padding: 0;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .runner-cta-title {
+            width: 100%;
+            margin-right: 0;
+        }
+
+        .runner-cta-description {
+            width: 100%;
+            margin-right: 0;
+        }
+        .ranking-category-filter fieldset {
+            width: 100%;
+            min-width: auto;
+        }
+
+    }
+
+    @media screen and (max-width:913px) {
+        .login-upgrade-overlay {
+            padding: 20px 28px 28px 28px;
+        }
+
+            .login-upgrade-overlay .upgrade-subscription {
+                padding: 20px 32px;
+            }
+
+            .login-upgrade-overlay.fr .upgrade-subscription.login-upgrade.loginborder, .login-upgrade-overlay.es .upgrade-subscription.login-upgrade.loginborder {
+                padding-top: 10px;
+            }
+
+            .login-upgrade-overlay.fr .subscribe-btn.mb_16, .login-upgrade-overlay.es .subscribe-btn.mb_16 {
+                margin-bottom: 0;
+            }
+    }
+
+    @media screen and (min-width:481px) and (max-width:768px) {
+        #RunnerRankingTable {
+            border-radius: 0;
+        }
+
+            #RunnerRankingTable tbody tr:last-child td:first-child {
+                border-bottom-left-radius: 0;
+            }
+    }
+
+    @media screen and (max-width: 767px) {
+        #RunnerRankingTable tbody tr td p {
+            word-wrap: break-word;
+        }
+
+        .top-banner .title {
+            font-size: 32px;
+            font-weight: 700;
+            line-height: 40px;
+            margin-top: 60px;
+        }
+
+        .top-banner {
+            height: 260px;
+        }
+
+        .runner-info {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .top-rankings .section-title {
+            font-size: 28px;
+            line-height: 36px;
+            padding-bottom: 24px;
+        }
+
+
+        #RunnerRankingTable_wrapper {
+            max-width: 100%;
+        }
+
+        .ranking-category-filter fieldset:first-child select {
+            width: 100% !important;
+        }
+
+        .ranking-category-filter fieldset:nth-child(2) select {
+            width: 100% !important;
+        }
+
+        #RunnerRankingTable_wrapper.dt-container .dataTable tbody tr td:first-child {
+            position: relative;
+            padding-left: 40px !important;
+        }
+
+        #RunnerRankingTable.dataTable.dtr-inline.collapsed > tbody > tr > td.dtr-control:before, #RunnerRankingTabl.dataTable.dtr-inline.collapsed > tbody > tr > th.dtr-control:before {
+            left: 10px;
+        }
+
+        #RunnerRankingTable.dataTable.dtr-inline.collapsed > tbody > tr.dtr-expanded > td.dtr-control:before, #RunnerRankingTabl.dataTable.dtr-inline.collapsed > tbody > tr.dtr-expanded > th.dtr-control:before {
+            left: 10px;
+        }
+
+        #RunnerRankingTable.dataTable > tbody > tr.child ul.dtr-details {
+            display: inline-block;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            display: flex !important;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+            #RunnerRankingTable.dataTable > tbody > tr.child ul.dtr-details > li {
+                border-bottom: none !important;
+                padding: 0 !important;
+                width: 45%;
+                display: flex !important;
+                flex-direction: column;
+                gap: 8px;
+            }
+
+                #RunnerRankingTable.dataTable > tbody > tr.child ul.dtr-details > li:last-child {
+                    margin-bottom: 0px;
+                }
+
+        #RunnerRankingTable.dataTable > tbody > tr.child span.dtr-title {
+            color: #585858 !important;
+            font-size: 14px !important;
+            font-weight: 500 !important;
+            line-height: 14px !important;
+            letter-spacing: -0.14px !important;
+            display: flex !important;
+        }
+
+        #RunnerRankingTable_wrapper.dt-container .dataTable tbody tr td ul li.PiIndex-column span.dtr-title img {
+            width: 12px !important;
+            height: 12px !important;
+            margin-right: 0;
+            margin-left: 4px;
+        }
+
+        #RunnerRankingTable_wrapper .score-badge {
+            padding: 6px 8px;
+            min-width: 106px;
+            width: fit-content;
+            font-size: 14px;
+        }
+
+        .score-badge span.score-label {
+            font-size: 14px;
+        }
+
+        .category-labels-container {
+            width: 100%;
+        }
+
+        #login-free-Modal .modal-content {
+            padding: 30px 25px;
+        }
+
+            #login-free-Modal .modal-content .modal-body h5 {
+                padding: 16px 0px 20px 0px;
+                font-size: 17px;
+            }
+
+        #RunnerRankingTable thead tr th {
+            padding-right: 10px !important;
+        }
+
+        #RunnerRankingTable_wrapper.dt-container .dataTable tr th:first-child {
+            padding-left: 10px !important;
+        }
+
+        #RunnerRankingTable_wrapper.dt-container .dataTable tbody tr td.dt-empty:last-child {
+            width: 100% !important;
+            text-align: center;
+        }
+    }
+
+    @media screen and (max-width: 640px) {
+        .runner-cta {
+            padding: 32px 31px;
+        }
+
+        .runner-cta-content {
+            gap: 0px;
+        }
+
+        .runner-cta-title {
+            font-size: 20px;
+            line-height: 32px;
+            padding-bottom: 8px;
+            letter-spacing: -0.376px;
+        }
+
+        .runner-cta-description {
+            font-size: 14px;
+            line-height: 20px;
+            letter-spacing: -0.252px;
+            margin-bottom: 24px;
+        }
+
+        button.runner-cta-button {
+            margin-top: 4px;
+        }
+
+        .runner-cta-button {
+            width: 100%;
+            max-width: 225px;
+        }
+
+        .filter-buttons {
+            border-radius: 0;
+            margin: 20px auto 0 auto;
+            padding: 4px 24px;
+            border-left-width: 0;
+            border-right-width: 0;
+        }
+
+        .card-divider {
+            margin: 24px 0 32px 0;
+        }
+
+        .rank-profile {
+            column-gap: 16px;
+        }
+
+        .runner-name {
+            margin: 0 0 8px;
+        }
+
+        .runner-photo-container {
+            width: 64px;
+            height: 64px;
+        }
+
+        .runner-photo {
+            width: 64px;
+            height: 64px;
+        }
+
+        .rankings-list:not(:last-child)::after {
+            background-image: none;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .full-rankings h2.section-title {
+            padding-bottom: 40px;
+            font-size: 28px;
+            line-height: 36px;
+        }
+
+        #RunnerRankingTable tbody tr td p, span.dtr-data {
+            font-size: 12px !important;
+            line-height: 14px !important;
+            letter-spacing: -0.14px !important;
+            font-weight: 500 !important;
+        }
+
+        #RunnerRankingTable tbody tr.dt-hasChild.dtr-expanded td {
+            background-color: #F8FBF3 !important;
+        }
+
+        #RunnerRankingTable tbody tr.child {
+            border-bottom: 1px solid #E4E4E4 !important;
+        }
+
+        table.dataTable tbody tr.child td.child {
+            background-color: #F8FBF3 !important;
+            text-align: left !important;
+            border: none;
+            padding-top: 0 !important;
+        }
+
+        tr.dt-hasChild.dtr-expanded {
+            background: #F8FBF3 !important;
+        }
+
+            tr.dt-hasChild.dtr-expanded td {
+                background: #F8FBF3 !important;
+            }
+
+        #RunnerRankingTable_wrapper.dt-container .dataTable tbody tr.child td.child {
+            background-color: #F8FBF3 !important;
+            border-bottom-color: #E4E4E4;
+        }
+
+        tr.dt-hasChild.dtr-expanded, tr.dt-hasChild.dtr-expanded td {
+            background-color: #F8FBF3 !important;
+        }
+    }
+
+    @media screen and (max-width:575px) {
+        .login-upgrade-overlay .upgrade-subscription {
+            width: 100%;
+        }
+
+        .login-upgrade-overlay.fr .upgrade-subscription.login-upgrade.loginborder, .login-upgrade-overlay.es .upgrade-subscription.login-upgrade.loginborder {
+            padding-top: 20px;
+        }
+
+        .login-upgrade-overlay.fr, .login-upgrade-overlay.es {
+            padding-top: 20px;
+        }
+
+        #RunnerRankingTable tbody tr td {
+            padding: 16px 4px !important;
+        }
+    }
+
+
+    @media screen and (max-width:540px) {
+        .top-banner {
+            background-image: url(../images/ranking-banner-mob.png) !important;
+        }
+
+        #RunnerRankingTable thead {
+            display: none;
+        }
+
+        td.dt-type-numeric.dtr-control {
+            font-size: 20px !important;
+        }
+
+        .profile-container span.initials {
+            font-size: 16px !important;
+            width: 40px !important;
+            height: 40px !important;
+            line-height: 40px !important;
+            letter-spacing: -0.16px !important;
+        }
+
+        #RunnerRankingTable tbody tr td img {
+            margin-right: 10px;
+            width: 40px;
+            height: 40px;
+        }
+
+        #RunnerRankingTable tbody tr td:nth-child(2) {
+            font-size: 16px;
+            line-height: 10px;
+            letter-spacing: normal;
+            padding-left: 0px !important;
+        }
+
+        #RunnerRankingTable_wrapper.dt-container .dataTable tbody tr td:nth-child(2) {
+            width: 400px !important;
+            padding-right: 90px !important;
+            padding-left: 0px !important;
+        }
+
+        span.country-flag-wrap {
+            width: 40%;
+        }
+
+        #RunnerRankingTable tbody tr td p {
+            width: 55%;
+            font-size: 12px;
+        }
+
+        #RunnerRankingTable_wrapper.dt-container .dataTable tbody tr td:nth-child(3) {
+            width: max-content !important;
+            padding-left: 150px !important;
+        }
+
+        #RunnerRankingTable_wrapper.dt-container .dataTable tbody tr td:nth-child(4) {
+            width: max-content !important;
+        }
+
+        #RunnerRankingTable_wrapper.dt-container .dataTable tbody tr td:nth-child(5) {
+            width: max-content !important;
+        }
+
+        #RunnerRankingTable tbody tr td {
+            padding: 16px 0px !important;
+            font-size: 14px;
+        }
+
+        #RunnerRankingTable tbody tr td {
+            padding: 10px 0px !important;
+        }
+
+        #RunnerRankingTable tbody tr:first-child td {
+            padding-top: 20px !important;
+        }
+
+        .runner-link {
+            display: block;
+            width: 100%;
+        }
+
+        span.profile-container {
+            width: 100%;
+        }
+
+        #RunnerRankingTable_wrapper.dt-container .dataTable tbody tr td:first-child {
+            padding-left: 48px !important;
+            padding-right: 10px !important;
+            text-align: center;
+            width: 48px !important;
+        }
+
+        #RunnerRankingTable.dataTable.dtr-inline.collapsed > tbody > tr > td.dtr-control:before, #RunnerRankingTabl.dataTable.dtr-inline.collapsed > tbody > tr > th.dtr-control:before {
+            left: 20px;
+        }
+
+        #RunnerRankingTable.dataTable.dtr-inline.collapsed > tbody > tr.dtr-expanded > td.dtr-control:before, #RunnerRankingTabl.dataTable.dtr-inline.collapsed > tbody > tr.dtr-expanded > th.dtr-control:before {
+            left: 20px;
+        }
+
+        #RunnerRankingTable_wrapper.dt-container .dataTable tbody tr.child td.child:first-child {
+            padding-left: 67px !important;
+            padding-right: 20px !important;
+        }
+
+        #RunnerRankingTable_wrapper.dt-container .dataTable tbody tr.child td.child {
+            border-bottom: 1px solid #E4E4E4 !important;
+        }
+
+        span.country-flag-wrap {
+            width: 16%;
+        }
+
+        #RunnerRankingTable_wrapper.dt-container .dataTable tbody tr td {
+            border-bottom-color: transparent;
+        }
+
+        #RunnerRankingTable_wrapper.dt-container .dataTable tbody tr.child td.child {
+            background-color: #F8FBF3 !important;
+            border-bottom-color: #E4E4E4;
+            padding-bottom: 20px !important;
+            /* padding-top: 0px !important;
+        */
+        }
+
+        #RunnerRankingTable tbody tr.child {
+            padding-top: 0px !important;
+        }
+
+        .ranking-mob-filter {
+            padding: 11.2px 16px;
+        }
+
+        tr.dt-hasChild.dtr-expanded, tr.dt-hasChild.dtr-expanded td {
+            background-color: #F8FBF3 !important;
+        }
+
+        #RunnerRankingTable thead tr:first-child td:first-child {
+            border-top-left-radius: 8px;
+        }
+
+        #RunnerRankingTable thead tr:first-child td:last-child {
+            border-top-right-radius: 8px;
+        }
+
+        #RunnerRankingTable tbody tr:last-child td:first-child {
+            border-bottom-left-radius: 8px;
+        }
+
+        #RunnerRankingTable tbody tr:last-child td:last-child {
+            border-bottom-right-radius: 8px;
+        }
+
+        #RunnerRankingTable_wrapper.dt-container .dataTable tbody tr:first-child td:first-child {
+            border-top-left-radius: 8px;
+        }
+
+        #RunnerRankingTable_wrapper.dt-container .dataTable tbody tr:first-child td:nth-child(2) {
+            border-top-right-radius: 8px;
+        }
+
+        #RunnerRankingTable_wrapper.dt-container .dataTable tbody tr:last-child td:first-child {
+            border-bottom-left-radius: 8px;
+        }
+
+        #RunnerRankingTable_wrapper.dt-container .dataTable tbody tr:last-child td:nth-child(2) {
+            border-bottom-right-radius: 8px;
+        }
+
+        #RunnerRankingTable tbody tr td p, span.dtr-data {
+            font-size: 14px !important;
+        }
+
+        #RunnerRankingTable {
+            border-radius: 8px;
+            padding-bottom: 37px;
+            background-color: #fff;
+        }
+
+        .ranking-filter-buttons {
+            justify-content: space-between;
+        }
+
+            .ranking-filter-buttons button.btn {
+                flex: initial !important;
+            }
+
+        #RunnerRankingTable.dataTable > tbody > tr.child ul.dtr-details > li {
+            width: 45%;
+            order: 0;
+        }
+
+            #RunnerRankingTable.dataTable > tbody > tr.child ul.dtr-details > li.PiIndex-column {
+                order: 1;
+            }
+
+            #RunnerRankingTable.dataTable > tbody > tr.child ul.dtr-details > li:last-child {
+                width: 170px !important;
+            }
+
+            #RunnerRankingTable.dataTable > tbody > tr.child ul.dtr-details > li:nth-child(2) {
+                order: 2;
+                /* move original second cell to third */
+            }
+
+            #RunnerRankingTable.dataTable > tbody > tr.child ul.dtr-details > li:nth-child(1) {
+                order: 0;
+                /* keep first as first */
+            }
+
+            #RunnerRankingTable.dataTable > tbody > tr.child ul.dtr-details > li:nth-child(3) {
+                order: 3;
+                /* move original second cell to third */
+            }
+
+        .login-upgrade-overlay .upgrade-subscription {
+            max-height: 363px;
+            padding: 32px;
+            width: 100%;
+        }
+
+        .login-upgrade-overlay {
+            padding: 11px 23px 11px 23px;
+            backdrop-filter: blur(15px);
+        }
+
+        .runner-inner-wrapper.Disabled {
+            padding-bottom: 40px;
+        }
+
+        .login-upgrade-overlay.fr, .login-upgrade-overlay.es {
+            padding-top: 11px;
+            padding-bottom: 11px;
+        }
+
+            .login-upgrade-overlay.fr .upgrade-subscription.login-upgrade.loginborder, .login-upgrade-overlay.es .upgrade-subscription.login-upgrade.loginborder {
+                padding-top: 32px;
+            }
+
+        .upgrade-subscription img {
+            width: 96px;
+        }
+
+        .upgrade-subscription .title {
+            font-size: 20px;
+            line-height: 24px !important;
+        }
+
+        .upgrade-subscription .subscribe-btn.mb_16 {
+            margin-bottom: 0px;
+        }
+
+        .upgrade-subscription .subscribe-btn .primary-btn {
+            font-size: 16px !important;
+        }
+
+        .country-flag {
+            width: 17px;
+        }
+
+        .score-badge {
+            padding: 4px 8px;
+        }
+
+        #RunnerRankingTable.dataTable.dtr-inline.collapsed > tbody > tr:first-child > td.dtr-control:before, #RunnerRankingTabl.dataTable.dtr-inline.collapsed > tbody > tr:first-child > th.dtr-control:before {
+            top: 58%;
+        }
+
+        #RunnerRankingTable.dataTable.dtr-inline.collapsed > tbody > tr.dtr-expanded:first-child > td.dtr-control:before, #RunnerRankingTabl.dataTable.dtr-inline.collapsed > tbody > tr.dtr-expanded:first-child > th.dtr-control:before {
+            top: 58%;
+        }
+    }
+
+    @media screen and (max-width:480px) {
+        #runner-ranking-container {
+            padding: 0;
+        }
+
+        .ranking-filter-buttons {
+            margin-bottom: 16px;
+            max-width: 353px;
+            width: 100%;
+        }
+
+        .runner-cta {
+            margin-top: 60px;
+        }
+
+        #RunnerRankingTable tbody tr td p, span.dtr-data {
+            font-size: 12px !important;
+        }
+
+
+
+        span.country-flag-wrap {
+            width: 30%;
+            padding-right: 5px;
+        }
+
+        #RunnerRankingTable tbody tr td p {
+            width: 53%;
+        }
+
+        #RunnerRankingTable_wrapper.dt-container .dataTable tr th:first-child {
+            padding-left: 12px !important;
+        }
+
+        #RunnerRankingTable tbody tr td {
+            padding: 16px 5px !important;
+        }
+
+        #RunnerRankingTable thead tr th {
+            padding: 16px 10px !important;
+        }
+
+
+        .general_popup .modal-dialog .modal-content .modal-header .btn-close {
+            width: 25px;
+            height: 25px;
+            background-repeat: no-repeat;
+        }
+
+        .login-upgrade-overlay .upgrade-subscription {
+            width: 100%;
+        }
+
+        .upgrade-subscription .subscribe-btn.mb_16 {
+            margin-bottom: 0px;
+        }
+
+        .login-upgrade-overlay {
+            padding: 42px 28px 28px 28px;
+        }
+
+        .runner-cta-description {
+            max-width: 285px;
+        }
+
+        #RunnerRankingTable.dataTable.dtr-inline.collapsed > tbody > tr:first-child > td.dtr-control:before, #RunnerRankingTabl.dataTable.dtr-inline.collapsed > tbody > tr:first-child > th.dtr-control:before {
+            top: 54%;
+        }
+
+        #RunnerRankingTable.dataTable.dtr-inline.collapsed > tbody > tr.dtr-expanded:first-child > td.dtr-control:before, #RunnerRankingTabl.dataTable.dtr-inline.collapsed > tbody > tr.dtr-expanded:first-child > th.dtr-control:before {
+            top: 54%;
+        }
+
+        #RunnerRankingTable.dataTable > tbody > tr.child ul.dtr-details > li {
+            width: 38%;
+        }
+
+        span.country-flag-wrap {
+            width: 20%;
+        }
+
+        #RunnerRankingTable_wrapper.dt-container .dataTable tbody tr.child td.child:first-child {
+            padding-left: 55px !important;
+        }
+
+        #RunnerRankingTable.dataTable > tbody > tr.child ul.dtr-details > li:last-child {
+            width: 150px !important;
+        }
+    }
+
+    @media screen and (max-width:413px) {
+        .login-upgrade-overlay {
+            padding: 16px 28px 28px 28px;
+        }
+
+        #RunnerRankingTable_wrapper.dt-container .dataTable tbody tr.child td.child:first-child {
+            padding-left: 57px !important;
+        }
+    }
+
+    @media screen and (max-width:393px) {
+        #RunnerRankingTable_wrapper.dt-container .dataTable tbody tr.child td.child:first-child {
+            padding-left: 30px !important;
+        }
+
+        #RunnerRankingTable.dataTable > tbody > tr.child ul.dtr-details > li {
+            width: 35%;
+        }
+    }
+
+    @media screen and (max-width:380px) {
+
+        #RunnerRankingTable.dataTable.dtr-inline.collapsed > tbody > tr > td.dtr-control:before, #RunnerRankingTabl.dataTable.dtr-inline.collapsed > tbody > tr > th.dtr-control:before {
+            left: 12px;
+            width: 20px;
+            height: 20px;
+            background-size: cover;
+        }
+
+        #RunnerRankingTable.dataTable.dtr-inline.collapsed > tbody > tr.dtr-expanded > td.dtr-control:before, #RunnerRankingTabl.dataTable.dtr-inline.collapsed > tbody > tr.dtr-expanded > th.dtr-control:before {
+            left: 12px;
+            width: 20px;
+            height: 20px;
+            background-size: cover;
+        }
+
+        #RunnerRankingTable tbody tr td p, span.dtr-data {
+            font-size: 12px !important;
+        }
+
+        #RunnerRankingTable_wrapper .score-badge {
+            font-size: 12px;
+            gap: 5px;
+        }
+
+        .score-badge span.score-label {
+            font-size: 12px;
+        }
+
+        #RunnerRankingTable tbody tr td img {
+            margin-right: 0;
+        }
+
+        span.country-flag-wrap {
+            width: fit-content;
+        }
+
+        .login-upgrade-overlay .upgrade-subscription {
+            max-height: max-content;
+            padding: 25px;
+            width: 100%;
+        }
+
+        .login-upgrade-overlay {
+            padding: 11px 23px 20px 23px;
+        }
+
+        #RunnerRankingTable_wrapper.dt-container .dataTable tbody tr td:nth-child(2) {
+            padding-right: 100px !important;
+        }
+
+        #RunnerRankingTable_wrapper.dt-container .dataTable tbody tr td:nth-child(3) {
+            padding-left: 100px !important;
+        }
+
+        .ranking-filter-buttons button.btn {
+            width: auto;
+        }
+
+        #RunnerRankingTable_wrapper.dt-container .dataTable tbody tr.child td.child:first-child {
+            padding-left: 35px !important;
+        }
+
+        #RunnerRankingTable_wrapper.dt-container .dataTable tbody tr td:first-child {
+            padding-left: 40px !important;
+        }
+
+        .profile-container span.initials {
+            font-size: 10px !important;
+        }
+
+        #RunnerRankingTable tbody tr td:nth-child(2) {
+            font-size: 13px;
+            line-height: 13px !important;
+        }
+
+        td.dt-type-numeric.dtr-control {
+            font-size: 16px !important;
+        }
+
+        #RunnerRankingTable.dataTable > tbody > tr.child ul.dtr-details > li:last-child {
+            width: 145px !important;
+        }
+
+        #RunnerRankingTable.dataTable > tbody > tr.child span.dtr-title {
+            font-size: 13px !important;
+        }
+
+        #RunnerRankingTable.dataTable > tbody > tr.child ul.dtr-details > li {
+            width: 40%;
+        }
+
+        #RunnerRankingTable {
+            border-radius: 0;
+        }
+
+            #RunnerRankingTable tbody tr:last-child td:first-child {
+                border-bottom-left-radius: 0;
+            }
+
+            #RunnerRankingTable thead tr:first-child th:first-child {
+                border-top-left-radius: 0;
+            }
+    }
+
+    @media screen and (max-width:360px) {
+        .login-upgrade-overlay .upgrade-subscription {
+            padding: 18px;
+        }
+
+        .ranking-filter-buttons button.btn {
+            padding: 12px 17px;
+        }
+
+        #RunnerRankingTable.dataTable > tbody > tr.child ul.dtr-details > li {
+            width: 100%;
+            flex-direction: column;
+        }
+
+        #RunnerRankingTable_wrapper.dt-container .dataTable tbody tr td:nth-child(2) {
+            padding-right: 50px !important;
+        }
+
+        #RunnerRankingTable_wrapper.dt-container .dataTable tbody tr td:nth-child(3) {
+            padding-left: 50px !important;
+        }
+    }
+
+

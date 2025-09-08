@@ -1028,7 +1028,6 @@ input[type=search] {
 
 a.label:focus, a.label:hover {
     color: #fff;
-    text-decoration: none;
     cursor: pointer
 }
 
@@ -1328,15 +1327,15 @@ body.theme-font-mono {
 }
 
 .header {
-    padding-top: 50px;
-    padding-bottom: 50px;
+    padding-top: 13px;
+    padding-bottom: 13px;
     display: -ms-flexbox;
     display: flex;
     -ms-flex-align: center;
     align-items: center;
-    position: absolute;
     width: 100%;
     z-index: 4
+    
 }
 
 .header--fixed {
@@ -1482,7 +1481,7 @@ a.nav-link.nav-link--black {
     }
 
 .section {
-    padding: 90px 20px
+    padding: 18px 20px
 }
 
 .section--sand {
@@ -1497,10 +1496,6 @@ a.nav-link.nav-link--black {
     min-height: 100vh
 }
 
-.section--header {
-    min-height: 320px;
-    padding-top: 130px
-}
 
 .section--content-center {
     -ms-flex-align: center;
@@ -1578,7 +1573,6 @@ body.frontpage .section__hero-content {
     max-width: 100%;
     padding: 10px 40px;
     text-align: center;
-    text-decoration: none;
     letter-spacing: 2px;
     text-transform: uppercase;
     color: #fff;

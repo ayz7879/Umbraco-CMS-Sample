@@ -1,0 +1,161 @@
+﻿@using Umbraco.Extensions
+@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Home>
+@using Umbraco.Cms.Core.Models.Blocks
+
+<section class="membership-wrapper">
+		<div class="container-ld-custom">
+			<div class="row">
+				<div class="col-lg-12">
+					<h2 class="section-title">@Model.Value("memberHeading")</h2>
+					<div class="membershipTabs">
+						<ul class="nav nav-pills">
+							<li class="active">
+								<a href="#runner" class="text-decoration-none" data-toggle="tab">@Model.Value("memberTabText")</a>
+							</li>
+							<li class="organizer_tab">
+								<a href="#organizer" class="text-decoration-none" data-toggle="tab">@Model.Value("memberTabText1")</a>
+							</li>
+						</ul>
+
+						<div class="tab-content clearfix">
+							<div class="tab-pane active" id="runner">
+								<div class="row justify-center mobile-gap">
+									<div class="col-lg-6 col-md-12 pl-14 pr-14 membership-tab">
+										<div class="free-account">
+											<h3>@Model.Value("leftTabText1")</h3>
+											<div class="account-benefits">
+												<div class="account-benefits-list">
+													<h4>@Model.Value("leftTabText2")</h4>
+													<ul>
+														<li>
+															<img src="https://itra.run/assets/images/check-arrow.svg" alt="">
+															<p>@Model.Value("leftTabText3")</p>
+														</li>
+														<li>
+															<img src="https://itra.run/assets/images/check-arrow.svg" alt="">
+															<p>@Model.Value("leftTabText4")</p>
+														</li>
+													</ul>
+													<a href="Account/RunnerITRAMembership" class="learn-more-link">@Model.Value("leftTabText5")</a>
+												</div>
+												<a href="/Account/Manage/Registration" class="account-btn text-decoration-none">@Model.Value("leftTabText6")</a>
+											</div>
+										</div>
+									</div>
+									<div class="col-lg-6 col-md-12 pl-14 pr-14 membership-tab">
+										<div class=" itra-subscription">
+											<h3>@Model.Value("rightTabText1")</h3>
+											<div class="free-account">
+												<div class="itra-price-container">
+													<div class="itra-price">12 <span class="dollar-sign"> € </span><span>/ year</span></div>
+													<img src="https://itra.run/assets/images/subsImg.svg" alt="">
+
+												</div>
+												<div class="account-benefits">
+													<div class="account-benefits-list">
+														<h4>@Model.Value("rightTabText3")</h4>
+														<ul>
+															<li>
+																<img src="https://itra.run/assets/images/check-arrow.svg" alt="">
+																<p>@Model.Value("rightTabText4")</p>
+															</li>
+															<li>
+																<img src="https://itra.run/assets/images/check-arrow.svg" alt="">
+																<p>@Model.Value("rightTabText5")</p>
+															</li>
+															<li>
+																<img src="https://itra.run/assets/images/check-arrow.svg" alt="">
+																<p>@Model.Value("rightTabText6")</p>
+															</li>
+															<li>
+																<img src="https://itra.run/assets/images/check-arrow.svg" alt="">
+																<p>@Model.Value("rightTabText7")</p>
+															</li>
+														</ul>
+														<a href="Account/RunnerITRAMembership" class="learn-more-link">@Model.Value("rightTabText8")</a>
+													</div>
+													<a href="Account/RunnerITRAMembership" class="account-btn text-decoration-none">@Model.Value("rightTabText9")</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="tab-pane" id="organizer">
+								<div class="row justify-center mobile-gap2">
+									<div class="col-lg-6 col-md-12 pl-14 pr-14 membership-tab">
+										<div class="free-account">
+											<h3>Free Account</h3>
+											<div class="account-benefits">
+												<div class="account-benefits-list">
+													<h4>Free Account Features:</h4>
+													<ul>
+														<li>
+															<img src="https://itra.run/assets/images/check-arrow.svg" alt="">
+															<p>Add and manage your races on the ITRA calendar. Boost visibility and help runners find your events worldwide.</p>
+														</li>
+														<li>
+															<img src="https://itra.run/assets/images/check-arrow.svg" alt="">
+															<p>Upload results to the ITRA Performance Index. Give runners official recognition and global ranking.</p>
+														</li>
+													</ul>
+													
+													<a href="Account/OrganizerITRAMembership" class="learn-more-link">Learn More</a>
+												</div>
+												<a href="Account/Manage/Registration" class="account-btn">Create a Free Account</a>
+											</div>
+										</div>
+									</div>
+									<div class="col-lg-6 col-md-12 pl-14 pr-14 membership-tab">
+										<div class=" itra-subscription organizer-tab">
+											<h3>ITRA Organizer Subscription</h3>
+											<div class="free-account">
+												<div class="itra-price-container">
+													<div class="itra-price">
+														<span class="start-text">
+															Starting from
+
+														</span>100 € <span>/ year</span>
+													</div>
+													<img src=".https://itra.run/assets/images/subsImg.svg" alt="">
+
+												</div>
+												<div class="account-benefits">
+													<div class="account-benefits-list">
+														<h4>Subscriber Benefits:</h4>
+														<ul>
+															<li>
+																<img src="https://itra.run/assets/images/check-arrow.svg" alt="">
+																<p>Have your racecourse evaluated to award official ITRA Endurance Points.</p>
+															</li>
+															<li>
+																<img src="https://itra.run/assets/images/check-arrow.svg" alt="">
+																<p>Become eligible to register as an ITRA National League event.</p>
+															</li>
+															<li>
+																<img src="https://itra.run/assets/images/check-arrow.svg" alt="">
+																<p>Unlock access to ITRA Organizer tools on Trace de Trail.</p>
+															</li>
+															<li>
+																<img src="https://itra.run/assets/images/check-arrow.svg" alt="">
+																<p>Access exclusive features: start list upload, point check, and finisher index review.</p>
+															</li>
+														</ul>
+																												
+														<a href="Account/OrganizerITRAMembership" class="learn-more-link">View all Subscription Benefits</a>
+													</div>
+													<a href="Account/OrganizerITRAMembership" class="account-btn">Subscribe Now</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</section>

@@ -1,0 +1,32 @@
+﻿@using Umbraco.Extensions
+@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Home>
+@using Umbraco.Cms.Core.Models.Blocks
+
+<section class="initiatives-wrapper">
+		<div class="container-md-custom">
+			<div class="row">
+				<div class="col-lg-12">
+					<h2 class="section-title">@Model.Value("heading")</h2>
+				</div>
+			</div>
+			<div class="row">
+				@if (Model.Value<BlockListModel>("exploreItem") is BlockListModel exploreItem)
+				{
+					foreach (var item in exploreItem)
+					{
+						var explore = item.Content;
+                    	var Logo = explore.Value<IPublishedContent>("logo");
+						<div class="col-lg-4 col-md-4">
+							<div class="initiatives-content">
+								<img src="@(Logo?.Url() ?? "")" alt="">
+								<h3>@explore.Value("title")</h3>
+								<p>@explore.Value("description")</p>
+								<a href="Nationalleague/MoreInfo?parms=national" target="_blank" class="learn-more-link">@explore.Value("linkText")</a>
+							</div>
+						</div>
+					}
+				}
+			</div>
+		</div>
+	</section>

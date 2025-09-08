@@ -1,0 +1,275 @@
+﻿@using Umbraco.Cms.Core.Models.PublishedContent
+@using Umbraco.Cms.Core.Routing
+@using Umbraco.Extensions
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@using System.Globalization
+@using Umbraco.Cms.Core.Models
+@using Umbraco.Cms.Core.Services
+@inject ILocalizationService LocalizationService
+@{
+    var languages = LocalizationService.GetAllLanguages();
+
+    // Function to get only language name from culture (remove region)
+    Func<CultureInfo, string> getLanguageNameOnly = culture =>
+    {
+        var name = culture.EnglishName;
+        var idx = name.IndexOf('(');
+        if (idx > 0)
+            return name.Substring(0, idx).Trim();
+        return name;
+    };
+    
+    var currentPath = Context.Request.Path.Value ?? "/";
+    var pathSegments = currentPath.Trim('/').Split('/', StringSplitOptions.RemoveEmptyEntries);
+    
+    // Dynamic list of supported languages from Umbraco
+    var supportedLangs = languages.Select(l => l.IsoCode.Substring(0, 2).ToLower()).ToList();
+
+    bool hasLangPrefix = pathSegments.Length > 0 && supportedLangs.Contains(pathSegments[0]);
+    var site = Model.Root();
+    var selection = site.Children.Where(x => x.IsVisible());
+    
+    // Get current language dynamically from Umbraco
+    var currentCulture = Model.GetCultureFromDomains();
+    var currentLang = "en"; // default fallback
+    
+    // Dynamic language detection instead of hardcoded if-else
+    if (!string.IsNullOrEmpty(currentCulture))
+    {
+        // Extract language code from culture (e.g., "en-US" -> "en")
+        currentLang = currentCulture.Split('-')[0].ToLower();
+        
+        // Validate if the detected language is in supported languages list
+        if (!supportedLangs.Contains(currentLang))
+        {
+            currentLang = "en"; // fallback to default
+        }
+    }
+    else
+    {
+        // Fallback: check URL path for language prefix
+        var pathParts = Context.Request.Path.Value?.Split('/', StringSplitOptions.RemoveEmptyEntries);
+        if (pathParts != null && pathParts.Length > 0 && supportedLangs.Contains(pathParts[0]))
+        {
+            currentLang = pathParts[0];
+        }
+    }
+    
+    // Get current language display name dynamically
+    var currentLanguageObj = languages.FirstOrDefault(l => l.IsoCode.StartsWith(currentLang, StringComparison.OrdinalIgnoreCase));
+    var currentLanguageDisplayName = currentLanguageObj != null 
+        ? getLanguageNameOnly(currentLanguageObj.CultureInfo) 
+        : currentLang.ToUpper();
+
+    var navImage = Model.Value<IPublishedContent>("itraNavImage");
+    var navLogo = Model.Value<IPublishedContent>("itraNavLogo");
+
+}
+
+<link rel="stylesheet" href="~/css/header.css" />
+
+<!-- itra navigation top -->
+<div class="top_header">
+    <div class="container-lg">
+        <nav class="navbar main-bar navbar-expand-lg navbar-dark pt-0 pb-0">
+            <div class="container-fluid top-bar-left ps-0">
+                <div class="row align-items-center">
+                    <div class="col-lg-5 col-md-6 main-logo ps-0">
+                        <a href="@site.Url()" class="navbar-brand itra-navbar-brand">
+                            <img src="@navImage.Url()" class="img-fluid">
+                        </a>
+                    </div>
+
+                    <div class="col-lg-7 col-md-6 d-flex align-items-center partners-slider partners-slider-desktop itra_partner">
+                        <p class="partners-text pt-0">@Model.GetProperty("ItraNavText").GetValue()</p>
+                        <a href="https://runderwear.avln.me/c/OjqUSNMXrKuJ" target="_blank">
+                            <img class="imagenew" src="@navLogo.Url()" style="display: block;">
+                        </a>
+                    </div>
+                </div>
+                <div id="navbarSupportedContent" class="collapse navbar-collapse "></div>
+            </div>
+            <div class="d-flex justify-content-end align-items-center right-side-gap">
+                <!-- Dynamic Language Dropdown with functionality from second page -->
+                <div class="div-outside-navbar lang-sec d-flex- flex-lg-fill">
+                    <div class="d-flex flex-lg-fill dropdown_language">
+                        <img src="https://itra.run/images/united-kingdom.png">
+                        
+                        <!-- Bootstrap dropdown instead of select -->
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle language-dropdown-btn" type="button" id="languageDropdownSelect" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span id="currentLanguageText">@currentLanguageDisplayName</span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="languageDropdownSelect">
+                                @foreach (var language in languages)
+                                {
+                                    var languageNameOnly = getLanguageNameOnly(language.CultureInfo);
+                                    var langCode = language.IsoCode.Substring(0, 2).ToLower();
+
+                                    // Build URL with replaced language prefix
+                                    string newUrl;
+                                    if (hasLangPrefix)
+                                    {
+                                        pathSegments[0] = langCode;
+                                        newUrl = "/" + string.Join("/", pathSegments);
+                                    }
+                                    else
+                                    {
+                                        newUrl = "/" + langCode + currentPath;
+                                    }
+
+                                    <li>
+                                        <a class="dropdown-item lang-option @(currentLang == langCode ? "active" : "")" 
+                                           data-lang="@langCode" 
+                                           href="@newUrl">
+                                            @languageNameOnly
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="create-account div-outside-navbar logged-in-dd w-auto ms-0">
+                    <div class="account-links justify-content-center">
+                        <ul class="navbar-nav mx-auto">
+                            <li class="nav-item dropdown ddconnect">
+                                <button class="btn dropdown-toggle btn_outline_primary d-none d-lg-block" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <img src="https://itra.run/Files/Photos/6893b66cd7044e6d97e6ed40b90a1fd1.jpg">
+                                    <span class="cls_firstNameClaim">Admintest</span>
+                                    <img src="https://itra.run/assets/images/arrow-down.svg" class="arrow-down-toggle">
+                                </button>
+                                <button class="btn dropdown-toggle d-inline-block d-lg-none btn_outline_primary ms-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <img src="https://itra.run/Files/Photos/6893b66cd7044e6d97e6ed40b90a1fd1.jpg">
+                                    <img src="https://itra.run/assets/images/arrow-down_black.svg" class="arrow-down-toggle">
+                                </button>
+                                <div class="logged-in dropdown-menu text-center" aria-labelledby="dropdownlg">
+                                    <a class="drop-down-list" href="/Admin">Admin</a>
+                                    <a class="drop-down-list" href="/api/RunnerSpace/GetRunnerSpace">My runner space</a>
+                                    <a class="drop-down-list text-red" href="/Account/Logout"><img src="https://itra.run/assets/images/logout.svg" class="mr_8">Logout</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+<!-- itra navigation end -->
+
+<!-- itra second navigation -->
+<div class="header_2">
+    <style>
+        .mobile-logo img {
+            max-width: 180px;
+        }
+        .mobile-menu-icon {
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+        .mobile-main-menu {
+            padding: 15px;
+        }
+        @@media (max-width: 991px) {
+            .main-logo,
+            .partners-text,
+            .partners-slider-desktop {
+                display: none !important;
+            }
+            .main-bar {
+                display: flex;
+                justify-content: end;
+                padding: 0 30px;
+            }
+            .main-bar > .container-fluid {
+                display: contents;
+            }
+            .partners-slider img {
+                width: 90px;
+                height: 70px;
+            }
+        }
+        @@media (min-width: 992px) {
+            .mobile-main-menu {
+                background: #000;
+            }
+            .mobile-logo,
+            .partners-slider-mobile {
+                display: none !important;
+            }
+         }
+    </style>
+    <div class="bottom_header">
+        <div class="bg-white navbar-expand-lg">
+            <div class="container-lg ps-lg-0">
+                <nav class="public navbar mt-0 pt-0 pb-0">
+                    <div class="mobile-logo">
+                        <a href="@site.Url()" class="navbar-brand itra-navbar-brand">
+                            <img src="https://itra.run/images/public/icons/itra_blanc.png" class="img-fluid">
+                        </a>
+                    </div>
+                    <div class="container-fluid d-flex align-items-center ps-0">
+                        <button class="navbar-toggler mobile-menu-icon collapsed" onclick="toggleMainMenu()" type="button" data-bs-toggle="collapse" data-bs-target="#itraPublicNav" aria-controls="itraPublicNav" aria-expanded="true" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div id="itraPublicNav" class="collapse navbar-collapse">
+                            <ul class="navbar-nav mr-auto d-flex align-items-center">
+                                <!-- Home Link - Dynamic -->
+                                <li class="nav-item dropdown li_header">
+                                    <a href="@site.Url()" class="nav-link @Html.Raw(Model.Id == site.Id ? "nav-link--active" : "")">
+                                        @site.Name
+                                    </a>
+                                </li>
+
+                                <!-- Dynamic Navigation Items -->
+                                @foreach (var item in selection)
+{
+    var isActive = item.IsAncestorOrSelf(Model) ? "nav-link--active" : "";
+    var hasChildren = item.Children().Where(x => x.IsVisible()).Any();
+    
+    // Specify which pages should have dropdown
+    var dropdownPages = new[] { "About ITRA", "News & Media", "FAQ" };
+    var shouldShowDropdown = hasChildren && dropdownPages.Contains(item.Name);
+    
+    <li class="nav-item dropdown">
+        @if (shouldShowDropdown)
+        {
+            <a class="nav-link dropdown-toggle @isActive" href="@item.Url()" id="@item.Name.Replace(" ", "-").Replace("&", "").ToLower()-tab" data-bs-toggle="dropdown" role="tab" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@item.Name</a>
+            <div aria-labelledby="@item.Name.Replace(" ", "-").Replace("&", "").ToLower()-tab" class="dropdown-menu">
+                @foreach (var child in item.Children().Where(x => x.IsVisible()))
+                {
+                    <a href="@child.Url()" class="dropdown-item @(child.Id == Model.Id ? "active" : "")">@child.Name</a>
+                }
+            </div>
+        }
+        else
+        {
+            <a class="nav-link @isActive" id="@item.Name.Replace(" ", "-").Replace("&", "").ToLower()-tab" href="@item.Url()" role="tab" aria-haspopup="true" aria-expanded="false">@item.Name</a>
+            <div aria-labelledby="@item.Name.Replace(" ", "-").Replace("&", "").ToLower()-tab" class="dropdown-menu"></div>
+        }
+    </li>
+}
+
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+   
+    <script type="text/javascript">
+        function setstarttab() {
+            localStorage.removeItem("searchfirst");
+        }
+        function toggleMainMenu() {
+            if ($("#itraPublicNav").hasClass("show")) {
+                $("#itraPublicNav").removeClass("show");
+            }
+        }
+    </script>
+</div>
+<!-- itra second navigation end -->

@@ -1,0 +1,64 @@
+﻿@using Umbraco.Extensions
+@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Home>
+@{
+    var backgroundImage = Model.HeroBackgroundImage != null ? Model.HeroBackgroundImage.Url() : String.Empty;
+    var welcome = Model.Value<IHtmlContent>("welcomeText");
+}
+
+<section class="hero-section position-relative background-image-full overlay overlay--dark section--content-center vh-100 d-flex align-items-center justify-content-center text-white"
+         style="background-image: url('@backgroundImage')">
+    <div class="container text-center">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 w-100" style="
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+            ">
+                <h1 class="display-3 fw-bold mb-4 hero-title">@Model.HeroHeader</h1>
+                <p class="lead fs-4  hero-description" style="
+                    font-weight: bold;
+                    width: 51%;
+                    letter-spacing: 1px;
+                ">@Model.HeroDescription</p>
+                <!-- @if (Model.HeroCtalink != null)
+                {
+                    <a class="btn btn-outline-light btn-lg px-5 py-3 rounded-pill hero-cta" 
+                       href="@Model.HeroCtalink.Url()">
+                        @Model.HeroCtacaption
+                        <i class="fas fa-arrow-right ms-2"></i>
+                    </a>
+                } -->
+                <a href="/About/History" target="_blank" class="learnMoreBtn text-decoration-none" >@Model.ItraButtonText</a>
+                <div class="banner-search-container w-100">
+						<div class="search-title">@Model.ItraSearchLabel</div>
+						<div class="search-section">
+							<div class="search-box">
+								<select id="searchType" class="search-select">
+									<option value="runner">@Model.ItraSearchInputText</option>
+									<option value="event">@Model.ItraSearchInputText2</option>
+                                </select>
+                                <div style="position: relative;width: 100%;">
+                                    <input type="text" id="InputSearch" autocomplete="off" placeholder="@Model.ItraSearchInputPlaceHolder">
+                                    <span id="clearBtn" class="clear-btn"><img src="https://itra.run/assets/images/search-clear.svg" alt=""></span>
+                                </div>
+                                <div onclick="redirectBasedOnSelection()" class="search-button">
+                                <img src="https://itra.run/assets/images/search-icon.png" class="search-icon">
+                                </div>
+                              
+                            </div>
+                            <div class="search-dropdown" style="display:none">
+                            </div>
+						</div>
+
+					</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scroll indicator -->
+    <div class="position-absolute bottom-0 start-50 translate-middle-x mb-4">
+        <i class="fas fa-chevron-down text-white scroll-indicator"></i>
+    </div>
+</section>

@@ -56,88 +56,18 @@
     @RenderSection("Header", required: false)
 </head>
 
+
+
 <body class="frontpage theme-font-@font theme-color-@colorTheme">
-    <div class="mobile-nav">
-        <nav class="nav-bar d-flex gap-3">
-            @await Html.PartialAsync("~/Views/Partials/Navigation/TopNavigation.cshtml")
-        </nav>
-    </div>
 
-    <header class="header">
-
-        <div class="logo">
-            @if (home.SiteLogo != null && !string.IsNullOrEmpty(home.SiteLogo.Url()))
-            {
-                <div class="nav-link--home">
-                    <img class="logo-image rounded-circle" src="@home.SiteLogo.Url()" alt="@home.Sitename" style="width: 80px; height: 80px; object-fit: cover;">
-
-                </div>
-            }
-            else
-            {
-                <a class="nav-link nav-link--home nav-link--home__text logo-text" href="/">@home.Sitename</a>
-            }
-        </div>
-
-        <nav class="nav-bar top-nav d-flex gap-3">
-            @await Html.PartialAsync("~/Views/Partials/Navigation/TopNavigation.cshtml")
-        </nav>
-
-        <div class="mobile-nav-handler">
-            <div class="hamburger lines" id="toggle-nav">
-                <span></span>
-            </div>
-        </div>
-
-    </header>
+    @await Html.PartialAsync("~/Views/Partials/Navigation/ItraTopNavigation.cshtml",home)
 
     <main>
         @RenderBody()
     </main>
 
-    <footer class="section--themed">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 ta-center">
-                    @home.FooterAddress
+    @await Html.PartialAsync("~/Views/Partials/Footer.cshtml",home)
 
-                    @if (socialLinks?.Any() == true)
-                {
-                    <div class="footer-social-icons mt-3">
-                        @foreach (var block in socialLinks)
-                        {
-                            var content = block.Content;
-                            var title = content.Value<string>("title");
-                            var url = content.Value<string>("url");
-                            var icon = content.Value<string>("iconClass");
-                                string fullUrl = url;
-    if (!string.IsNullOrWhiteSpace(url) && !url.StartsWith("http", StringComparison.OrdinalIgnoreCase))
-    {
-        fullUrl = "https://" + url;
-    }
-
-                            <a href="@fullUrl" target="_blank" title="@title" class="me-3">
-                                <i class="@icon"></i>
-                            </a>
-                        }
-                    </div>
-                }
-                </div>
-            </div>
-        </div>
-    </footer>
-
-
-
-
-
-
-
-
-    @*
-    Wish not to use JQuery?
-    Insert this method call to load Umbraco Forms client dependencies without JQuery. @Html.RenderUmbracoFormDependencies()
-    *@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>

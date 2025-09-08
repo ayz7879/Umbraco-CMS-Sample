@@ -1,0 +1,439 @@
+﻿@using Umbraco.Extensions
+@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Home>
+@using Umbraco.Cms.Core.Models.Blocks
+@{
+  var rankingPeoples = Model.Value<BlockListModel>("rankingPeoples");
+  
+  // Get all unique tags from ranking peoples
+  var allTags = new List<string>();
+  if (rankingPeoples != null)
+  {
+    foreach (var item in rankingPeoples)
+    {
+      var ranker = item.Content;
+      var tagValue = ranker.Value("tag"); // tag property se value get karo
+      
+      if (tagValue != null)
+      {
+        string tagsString = "";
+        
+        // Check if it's an array or single value
+        if (tagValue is string[])
+        {
+          tagsString = string.Join(",", (string[])tagValue);
+        }
+        else if (tagValue is string)
+        {
+          tagsString = tagValue.ToString();
+        }
+        
+        if (!string.IsNullOrEmpty(tagsString))
+        {
+          var tagList = tagsString.Split(',').Select(t => t.Trim()).Where(t => !string.IsNullOrEmpty(t));
+          allTags.AddRange(tagList);
+        }
+      }
+    }
+  }
+  
+  // Get unique tags
+  var uniqueTags = allTags.Distinct().OrderBy(t => t).ToList();
+}
+
+<link href="/assets/css/ranking.css" rel="stylesheet">
+<link href="/assets/css/home.css" rel="stylesheet">
+
+<section class="top-rankings home-top-ranking">
+  <div class="top-rankings-container">
+    <h2 class="section-title">@Model.Value("rankingHeading")</h2>
+    <div class="category-filter">
+      <div class="filter-header">
+        <span class="filter-label"> @Model.Value("rankingCategory")</span>
+        <div>
+          <span
+            class="modal-info-icon"
+            style="cursor: pointer;"
+            onclick="openModal()"
+          >
+            <img
+              src="https://itra.run/assets/images/info-icon.svg"
+              alt="Filter"
+              class="filter-icon"
+            />
+          </span>
+          <!--Distance Ranking Modal-->
+          <div class="category-modal-container">
+            <div
+              class="category-modal modal fade1 general_popup"
+              id="categoryModal"
+              style="display: none;"
+            >
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="popup-header modal-header">
+                    <h2>@Model.Value("rankingCategory")</h2>
+                    <span class="popup-close close" onclick="closeModal()">
+                      <img src="/assets/images/modal-close.svg" alt="" />
+                    </span>
+                  </div>
+                  <div class="category-row modal-body">
+                    @if (uniqueTags != null && uniqueTags.Any())
+                    {
+                      @foreach (var tag in uniqueTags)
+                      {
+                        <div class="category">
+                          <div class="category-title">@tag</div>
+                        </div>
+                      }
+                    }
+                    else
+                    {
+                      <div class="category">
+                        <div class="category-title">No categories available</div>
+                      </div>
+                    }
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dynamic Filter Buttons with General -->
+      <div class="filter-buttons" role="group" id="categoryTabs">
+        <button class="filter-btn active" data-category="general">General</button>
+        @if (uniqueTags != null && uniqueTags.Any())
+        {
+          @foreach (var tag in uniqueTags)
+          {
+            <button class="filter-btn" data-category="@tag">@tag</button>
+          }
+        }
+      </div>
+    </div>
+
+    <div class="rankings-grid">
+      <div class="rankings-card">
+        <h3 class="card-title">@Model.Value("genderWomenText")</h3>
+        <hr class="card-divider" />
+        <div id="topWomenContainer">
+          @if (rankingPeoples != null)
+          {
+            var womenRankers = rankingPeoples
+              .Where(item => item.Content.Value<string>("gender")?.ToLower() == "women")
+              .OrderBy(item => item.Content.Value<int>("rank"))
+              .ToList();
+
+            if (womenRankers.Any())
+            {
+              foreach (var item in womenRankers)
+              {
+                var ranker = item.Content;
+                var rank = ranker.Value<int>("rank");
+                var rankerImage = ranker.Value<IPublishedContent>("photo");
+                var rankerName = ranker.Value<string>("rankerName");
+                var countryName = ranker.Value<string>("country");
+                var countryFlag = ranker.Value<IPublishedContent>("countryFlag");
+                var rankerScore = ranker.Value<int>("rankerIndexNumber");
+                var rankerLevel = ranker.Value<string>("rankerIndexText");
+                var rankerLink = ranker.Value<string>("rankerLink");
+                
+                // Fix tag value extraction
+                var rankerTagValue = ranker.Value("tag");
+                string rankerTags = "";
+                if (rankerTagValue is string[])
+                {
+                  rankerTags = string.Join(",", (string[])rankerTagValue);
+                }
+                else if (rankerTagValue is string)
+                {
+                  rankerTags = rankerTagValue.ToString();
+                }
+
+                <div class="rankings-list ranker-item women-ranker" data-tags="@rankerTags.ToLower()">
+                  <a href="@rankerLink" target="_blank">
+                    <div class="ranking-item">
+                      <div class="rank-profile">
+                        <span class="rank">@rank</span>
+                        <div class="runner-photo-container">
+                          <img
+                            src="@(rankerImage?.Url() ?? "")"
+                            onerror="handleImageError(this)"
+                            class="runner-photo"
+                          />
+                          <div class="runner-initials hidden">@rankerName</div>
+                        </div>
+                      </div>
+                      <div class="runner-info">
+                        <div class="runner-details">
+                          <h4 class="runner-name">@rankerName</h4>
+                          <div class="runner-country">
+                            <img
+                              src="@(countryFlag?.Url() ?? "")"
+                              alt="Flag"
+                              class="country-flag"
+                            />
+                            <span>@countryName</span>
+                          </div>
+                        </div>
+                        <div
+                          class="score-badge elite"
+                          style="background-color: #bc4a51"
+                        >
+                          <span class="score">@rankerScore</span>
+                          <div class="score-divider"></div>
+                          <span class="level">@rankerLevel</span>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              }
+            }
+          }
+          <!-- No Women Rankers Message -->
+          <div class="no-rankers-message women-no-rankers" style="display: none; text-align: center; padding: 20px; color: #666;">
+            <p>No women rankers available for this category</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="rankings-card">
+        <h3 class="card-title">@Model.Value("genderMenText")</h3>
+        <hr class="card-divider" />
+        <div id="topMenContainer">
+          @if (rankingPeoples != null)
+          {
+            var menRankers = rankingPeoples
+              .Where(item => item.Content.Value<string>("gender")?.ToLower() == "men")
+              .OrderBy(item => item.Content.Value<int>("rank"))
+              .ToList();
+
+            if (menRankers.Any())
+            {
+              foreach (var item in menRankers)
+              {
+                var ranker = item.Content;
+                var rank = ranker.Value<int>("rank");
+                var rankerImage = ranker.Value<IPublishedContent>("photo");
+                var rankerName = ranker.Value<string>("rankerName");
+                var countryName = ranker.Value<string>("country");
+                var countryFlag = ranker.Value<IPublishedContent>("countryFlag");
+                var rankerScore = ranker.Value<int>("rankerIndexNumber");
+                var rankerLevel = ranker.Value<string>("rankerIndexText");
+                var rankerLink = ranker.Value<string>("rankerLink");
+                
+                // Fix tag value extraction
+                var rankerTagValue = ranker.Value("tag");
+                string rankerTags = "";
+                if (rankerTagValue is string[])
+                {
+                  rankerTags = string.Join(",", (string[])rankerTagValue);
+                }
+                else if (rankerTagValue is string)
+                {
+                  rankerTags = rankerTagValue.ToString();
+                }
+
+                <div class="rankings-list ranker-item men-ranker" data-tags="@rankerTags.ToLower()">
+                  <a href="@rankerLink" target="_blank">
+                    <div class="ranking-item">
+                      <div class="rank-profile">
+                        <span class="rank">@rank</span>
+                        <div class="runner-photo-container">
+                          <img
+                            src="@(rankerImage?.Url() ?? "")"
+                            onerror="handleImageError(this)"
+                            class="runner-photo"
+                          />
+                          <div class="runner-initials hidden">@rankerName</div>
+                        </div>
+                      </div>
+                      <div class="runner-info">
+                        <div class="runner-details">
+                          <h4 class="runner-name">@rankerName</h4>
+                          <div class="runner-country">
+                            <img
+                              src="@(countryFlag?.Url() ?? "")"
+                              alt="Flag"
+                              class="country-flag"
+                            />
+                            <span>@countryName</span>
+                          </div>
+                        </div>
+                        <div
+                          class="score-badge elite"
+                          style="background-color: #bc4a51"
+                        >
+                          <span class="score">@rankerScore</span>
+                          <div class="score-divider"></div>
+                          <span class="level">@rankerLevel</span>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              }
+            }
+          }
+          <!-- No Men Rankers Message -->
+          <div class="no-rankers-message men-no-rankers" style="display: none; text-align: center; padding: 20px; color: #666;">
+            <p>No men rankers available for this category</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="loadMoreWrapper">
+      <a
+        href="/Runners/Ranking"
+        target="_blank"
+        class="load-more-btn"
+        id="loadMore"
+        >@Model.Value("buttonText")</a
+      >
+    </div>
+  </div>
+</section>
+
+<script>
+// Modal functions
+function openModal() {
+    document.getElementById('categoryModal').style.display = 'block';
+}
+
+function closeModal() {
+    document.getElementById('categoryModal').style.display = 'none';
+}
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+    const modal = document.getElementById('categoryModal');
+    if (event.target === modal) {
+        closeModal();
+    }
+}
+
+// Filter functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const womenRankers = document.querySelectorAll('.women-ranker');
+    const menRankers = document.querySelectorAll('.men-ranker');
+    const womenNoRankersMsg = document.querySelector('.women-no-rankers');
+    const menNoRankersMsg = document.querySelector('.men-no-rankers');
+
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Remove active class from all buttons
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            // Add active class to clicked button
+            this.classList.add('active');
+
+            const selectedCategory = this.getAttribute('data-category').toLowerCase();
+
+            // Filter women rankers
+            let visibleWomenCount = 0;
+            womenRankers.forEach(item => {
+                const itemTags = item.getAttribute('data-tags') || '';
+                
+                if (selectedCategory === 'general') {
+                    item.style.display = 'block';
+                    visibleWomenCount++;
+                } else {
+                    if (itemTags.includes(selectedCategory)) {
+                        item.style.display = 'block';
+                        visibleWomenCount++;
+                    } else {
+                        item.style.display = 'none';
+                    }
+                }
+            });
+
+            // Show/hide no rankers message for women
+            if (visibleWomenCount === 0) {
+                womenNoRankersMsg.style.display = 'block';
+            } else {
+                womenNoRankersMsg.style.display = 'none';
+            }
+
+            // Filter men rankers
+            let visibleMenCount = 0;
+            menRankers.forEach(item => {
+                const itemTags = item.getAttribute('data-tags') || '';
+                
+                if (selectedCategory === 'general') {
+                    item.style.display = 'block';
+                    visibleMenCount++;
+                } else {
+                    if (itemTags.includes(selectedCategory)) {
+                        item.style.display = 'block';
+                        visibleMenCount++;
+                    } else {
+                        item.style.display = 'none';
+                    }
+                }
+            });
+
+            // Show/hide no rankers message for men
+            if (visibleMenCount === 0) {
+                menNoRankersMsg.style.display = 'block';
+            } else {
+                menNoRankersMsg.style.display = 'none';
+            }
+
+            console.log(`Filtered: ${selectedCategory} - Women: ${visibleWomenCount}, Men: ${visibleMenCount}`);
+        });
+    });
+});
+</script>
+
+<style>
+/* Modal styles */
+.category-modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.modal-dialog {
+    position: relative;
+    margin: 10% auto;
+    max-width: 500px;
+}
+
+.modal-content {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.popup-header {
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: between;
+    align-items: center;
+}
+
+.popup-close {
+    cursor: pointer;
+    margin-left: auto;
+}
+
+.category-row {
+    padding: 20px;
+}
+
+.no-rankers-message {
+    font-style: italic;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    margin: 10px 0;
+}
+</style>

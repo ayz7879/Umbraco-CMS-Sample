@@ -28,8 +28,7 @@
         });
     }
     
-    // YAHAN CHANGE KIYA: ab hum total articles calculate kar rahe hain starting se current page tak
-    var totalArticlesToShow = page * articlesPerLoad; // Total articles jo dikhane hain
+    var totalArticlesToShow = page * articlesPerLoad;
     var articlesToRender = filteredArticles?.Take(totalArticlesToShow).ToList() ?? new List<IPublishedContent>();
     var allArticlesCount = filteredArticles?.Count() ?? 0;
     var hasMoreArticles = allArticlesCount > totalArticlesToShow;
@@ -56,7 +55,6 @@
     {
         Layout = null;
         
-        // YAHAN CHANGE: AJAX ke liye complete HTML render kar rahe hain with proper row structure
         var articlesHtml = RenderArticlesInRows(articlesToRender, articlesPerRow);
         
         // Clean HTML for JSON
@@ -76,8 +74,6 @@
 }
 
 <link rel="stylesheet" href="~/css/ArticlesPage.css" />
-
-@Html.Partial("~/Views/Partials/SectionHeader.cshtml")
 
 <div class="articles-container">
     
@@ -122,16 +118,13 @@ document.addEventListener('DOMContentLoaded', function() {
             const currentPage = parseInt(btn.getAttribute('data-page'));
             const isLoading = btn.getAttribute('data-loading') === 'true';
             
-            // Prevent multiple requests
             if (isLoading) return;
             
-            // Show loading state
             btn.setAttribute('data-loading', 'true');
             btn.querySelector('.load-text').style.display = 'none';
             btn.querySelector('.loading-text').style.display = 'inline';
             btn.disabled = true;
             
-            // Make AJAX request with current filter
             const activeFilter = document.querySelector('.filter-tab.active');
             const currentFilter = activeFilter ? activeFilter.getAttribute('data-filter') : 'all';
             const url = currentFilter === 'all' 
@@ -147,10 +140,8 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(response => response.json())
             .then(data => {
-                // YAHAN CHANGE: Replace kar rahe hain append ke bajay
                 articlesWrapper.innerHTML = data.html;
                 
-                // Update button state
                 if (data.hasMore) {
                     btn.setAttribute('data-page', data.nextPage);
                     btn.setAttribute('data-loading', 'false');
@@ -158,14 +149,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     btn.querySelector('.loading-text').style.display = 'none';
                     btn.disabled = false;
                 } else {
-                    // No more articles, hide button
                     btn.style.display = 'none';
                 }
             })
             .catch(error => {
                 console.error('Error loading more articles:', error);
                 
-                // Reset button state on error
                 btn.setAttribute('data-loading', 'false');
                 btn.querySelector('.load-text').style.display = 'inline';
                 btn.querySelector('.loading-text').style.display = 'none';
@@ -182,27 +171,23 @@ document.addEventListener('DOMContentLoaded', function() {
         tab.addEventListener('click', function() {
             const filter = this.getAttribute('data-filter');
             
-            // Update active tab
             filterTabs.forEach(t => t.classList.remove('active'));
             this.classList.add('active');
             
-            // Reset Load More button for new filter
             if (loadMoreBtn) {
-                loadMoreBtn.setAttribute('data-page', '2'); // Next page will be 2
-                loadMoreBtn.style.display = 'block'; // Show button again
+                loadMoreBtn.setAttribute('data-page', '2');
+                loadMoreBtn.style.display = 'block';
                 loadMoreBtn.setAttribute('data-loading', 'false');
                 loadMoreBtn.querySelector('.load-text').style.display = 'inline';
                 loadMoreBtn.querySelector('.loading-text').style.display = 'none';
                 loadMoreBtn.disabled = false;
             }
             
-            // Clear current articles and reload with filter
             articlesWrapper.innerHTML = '';
             loadFilteredArticles(filter, 1);
         });
     });
     
-    // Function to load filtered articles
     function loadFilteredArticles(filter, page) {
         const url = filter === 'all' 
             ? `${window.location.pathname}?page=${page}`
@@ -219,7 +204,6 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(data => {
             articlesWrapper.innerHTML = data.html;
             
-            // Update Load More button
             if (loadMoreBtn) {
                 if (data.hasMore) {
                     loadMoreBtn.setAttribute('data-page', data.nextPage);
@@ -237,7 +221,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 @{
-    // NAYI FUNCTION: Ye function articles ko proper rows mein arrange karti hai
+    // MODIFIED FUNCTION - First row special, rest normal
     string RenderArticlesInRows(List<IPublishedContent> articlesToRender, int articlesPerRow)
     {
         if (articlesToRender == null || !articlesToRender.Any())
@@ -246,54 +230,43 @@ document.addEventListener('DOMContentLoaded', function() {
         var html = "";
         var totalArticles = articlesToRender.Count;
         var currentIndex = 0;
+        var isFirstRow = true;
         
         while (currentIndex < totalArticles)
         {
-            // Current row mein kitne articles honge - min of (articlesPerRow, remaining articles)
-            var remainingArticles = Math.Min(articlesPerRow, totalArticles - currentIndex);
-            var rowClass = $"articles-row-{remainingArticles}";
-            
-            html += $"<div class='{rowClass}' data-row='{currentIndex}'>";
-            
-            if (remainingArticles == 1)
+            if (isFirstRow && totalArticles >= 3)
             {
-                html += RenderSingleArticle(articlesToRender[currentIndex]).ToString();
+                // FIRST ROW - Special Layout (1 left + 2 right)
+                html += "<div class='articles-row-first' data-row='0'>";
+                html += RenderFirstRowSpecial(articlesToRender, currentIndex).ToString();
+                html += "</div>";
+                currentIndex += 3;
+                isFirstRow = false;
             }
-            else if (remainingArticles == 2)
+            else
             {
-                html += RenderTwoArticles(articlesToRender, currentIndex).ToString();
+                // ALL OTHER ROWS - Normal 3 columns layout
+                var remainingArticles = Math.Min(3, totalArticles - currentIndex);
+                html += "<div class='articles-row-normal' data-row='" + currentIndex + "'>";
+                
+                for (int i = 0; i < remainingArticles; i++)
+                {
+                    if (currentIndex + i < totalArticles)
+                    {
+                        html += RenderArticleCard(articlesToRender[currentIndex + i], "").ToString();
+                    }
+                }
+                
+                html += "</div>";
+                currentIndex += remainingArticles;
             }
-            else if (remainingArticles >= 3) // 3 ya zyada articles
-            {
-                html += RenderThreeArticles(articlesToRender, currentIndex).ToString();
-            }
-            
-            html += "</div>";
-            currentIndex += remainingArticles;
         }
         
         return html;
     }
 
-    IHtmlContent RenderSingleArticle(IPublishedContent article)
-    {
-        return RenderArticleCard(article, "article-large");
-    }
-    
-    IHtmlContent RenderTwoArticles(List<IPublishedContent> articles, int startIndex)
-    {
-        var html = "";
-        for (int i = 0; i < 2; i++)
-        {
-            if (startIndex + i < articles.Count)
-            {
-                html += RenderArticleCard(articles[startIndex + i], "").ToString();
-            }
-        }
-        return Html.Raw(html);
-    }
-    
-    IHtmlContent RenderThreeArticles(List<IPublishedContent> articles, int startIndex)
+    // FIRST ROW SPECIAL LAYOUT FUNCTION
+    IHtmlContent RenderFirstRowSpecial(List<IPublishedContent> articles, int startIndex)
     {
         var html = "<div class='articles-left-column'>";
         html += RenderArticleCard(articles[startIndex], "article-large").ToString();
